@@ -5,11 +5,12 @@
 #include<vector>
 
 #include"nlohmann/json.hpp"
-using json = nlohmann::json;
 
 #include"projects/Todo.hpp"
 
 namespace projects {
+
+	using json = nlohmann::json;
 
 	class Project;
 
@@ -31,6 +32,8 @@ namespace projects {
 			void setSubprojects(Subprojects const & s) { subprojects = s; }
 
 			void setActions(TodoList const & a) { actions = a; }
+
+			Project & getSubproject(std::string name);
 
 			template<typename T, typename Fun>
 			void accumulateFromSubprojects(T & result, Fun accumulator) const {

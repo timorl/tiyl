@@ -2,6 +2,10 @@
 
 namespace projects {
 
+	Project & Project::getSubproject(std::string name) {
+		return subprojects[name];
+	}
+
 	void to_json(json & j, Project const & p) {
 		j = {{"description", p.getDescription()}};
 		if (p.getSubprojects().size()) {
