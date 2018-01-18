@@ -13,6 +13,8 @@ using Project = projects::Project;
 using Subprojects = projects::Subprojects;
 #include"projects/Todo.hpp"
 using TodoList = projects::TodoList;
+#include"projects/Mess.hpp"
+using Mess = projects::Mess;
 
 const std::string MESS_FILE("mess");
 const std::string PROJECTS_FILE("Projects.json");
@@ -20,7 +22,7 @@ const std::string PROJECTS_FILE("Projects.json");
 // Refactor asap unless you drop this project.
 const std::string HARDCODED_DIR("/home/timorl/stuff");
 
-int status(TodoList & mess, Project & p, std::vector<std::string>) {
+int status(Mess & mess, Project & p, std::vector<std::string>) {
 	int messSize = mess.size();
 	Subprojects all;
 	p.accumulateFromSubprojects(all, projects::accumulateAll);
@@ -38,7 +40,7 @@ int status(TodoList & mess, Project & p, std::vector<std::string>) {
 	return 0;
 }
 
-using Command = std::function<int(TodoList &, Project &, std::vector<std::string>)>;
+using Command = std::function<int(Mess &, Project &, std::vector<std::string>)>;
 
 std::map<std::string, Command> runCommand = {
 	{"status", status},
@@ -51,7 +53,7 @@ int main(int argc, char * argv[]) {
 	messFile /= MESS_FILE;
 	std::fstream messFileStream(messFile);
 
-	TodoList mess;
+	Mess mess;
 	messFileStream >> mess;
 
 	std::experimental::filesystem::path projectsFile = dataDir;

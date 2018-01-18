@@ -36,11 +36,13 @@ set(COMMON_HDRS
 	${PROJECT_SOURCE_DIR}/nlohmann/json.hpp
 	${PROJECT_SOURCE_DIR}/projects/Project.hpp
 	${PROJECT_SOURCE_DIR}/projects/Todo.hpp
+	${PROJECT_SOURCE_DIR}/projects/Mess.hpp
 	)
 
 set(COMMON_SRCS
 	${PROJECT_SOURCE_DIR}/projects/Project.cpp
 	${PROJECT_SOURCE_DIR}/projects/Todo.cpp
+	${PROJECT_SOURCE_DIR}/projects/Mess.cpp
 	)
 
 include_directories(

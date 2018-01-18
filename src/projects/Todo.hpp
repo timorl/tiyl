@@ -10,7 +10,5 @@ namespace projects {
 
 	class TodoList : public std::vector<Todo> {};
 
-	std::istream & operator>>(std::istream & is, TodoList & l);
-
 }
 #endif
