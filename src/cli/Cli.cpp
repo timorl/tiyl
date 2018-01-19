@@ -4,8 +4,8 @@
 
 namespace cli {
 
-	bool prompt(Context &, std::string & input) {
-		std::cout << "tiyl> ";
+	bool prompt(Context & c, std::string & input) {
+		std::cout << c.getCurrentName() << "> ";
 		if (std::getline(std::cin, input)) {
 			return true;
 		}

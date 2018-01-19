@@ -21,7 +21,7 @@ namespace cli {
 				current(&(this->life)),
 				currentName(ROOT_NAME),
 				lastResult(0)
-		{}
+			{}
 
 			Mess const & getMess() const { return mess; }
 
