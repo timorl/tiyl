@@ -6,6 +6,19 @@ namespace projects {
 		return subprojects[name];
 	}
 
+	bool Project::isActionable() const {
+		if (!actions.empty()) {
+			return true;
+		}
+		bool result = false;
+		accumulateFromSubprojects(result,
+			[](bool & result, Subproject const & sp){
+				return result || sp.second.isActionable();
+			}
+		);
+		return result;
+	}
+
 	void to_json(json & j, Project const & p) {
 		j = {{"description", p.getDescription()}};
 		if (p.getSubprojects().size()) {

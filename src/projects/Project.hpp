@@ -35,6 +35,8 @@ namespace projects {
 
 			Project & getSubproject(std::string name);
 
+			bool isActionable() const;
+
 			template<typename T, typename Fun>
 			void accumulateFromSubprojects(T & result, Fun accumulator) const {
 				for (Subproject const & sp : getSubprojects()) {

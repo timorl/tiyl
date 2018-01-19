@@ -52,7 +52,7 @@ int main(int argc, char * argv[]) {
 		for (int i = 2; i < argc; i++) {
 			cmdArgs.push_back(argv[i]);
 		}
-		return cli::singleCommand(context, argv[1], cmdArgs);
+		return cli::singleCommand(cli::commands, context, argv[1], cmdArgs);
 	}
 
 	cli::commandLine(context);

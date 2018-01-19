@@ -27,6 +27,8 @@ namespace cli {
 
 			Project const & getProject() const { return *current; }
 
+			std::string const & getCurrentName() const { return currentName; }
+
 			bool moveToChild(std::string childName);
 
 			bool moveUp();

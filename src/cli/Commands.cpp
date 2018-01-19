@@ -10,6 +10,7 @@ namespace cli {
 
 	using Project = projects::Project;
 	using Subprojects = projects::Subprojects;
+	using Subproject = projects::Subproject;
 	using TodoList = projects::TodoList;
 	using Mess = projects::Mess;
 
@@ -30,6 +31,36 @@ namespace cli {
 		std::cout << "You have " << allSize << " projects." << std::endl;
 		std::cout << "Among those " << nonactionableSize << " are nonactionable." << std::endl;
 		std::cout << "You can take " << actionsSize << " actions." << std::endl;
+		return 0;
+	}
+
+	int down(Context & c, std::vector<std::string> const & args) {
+		Project const & project = c.getProject();
+		Subprojects const & subprojects = project.getSubprojects();
+		std::vector<std::string> names;
+		for (Subproject const & subproject : subprojects) {
+			names.push_back(subproject.first);
+		}
+		std::string subprojectName;
+		if ( !args.empty() ) {
+			subprojectName = names[std::stoi(args[0])];
+		} else {
+			subprojectName = requestChoice(names, "subproject");
+		}
+		if ( c.moveToChild(subprojectName) ) {
+			std::cout << "Moving to " << subprojectName << "." << std::endl;
+			return 0;
+		}
+		return 1;
+	}
+
+	int up(Context & c, std::vector<std::string> const &) {
+		c.moveUp();
+		return 0;
+	}
+
+	int top(Context & c, std::vector<std::string> const &) {
+		c.moveTop();
 		return 0;
 	}
 
