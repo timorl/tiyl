@@ -15,19 +15,20 @@ namespace cli {
 
 	class Context {
 		public:
-			Context(Project && life, Mess && mess) :
+			Context(Project && life) :
 				life(life),
-				mess(mess),
 				current(&(this->life)),
 				currentName(ROOT_NAME),
-				lastResult(0)
+				lastResult(0),
+				pendingChanges(false)
 			{}
-
-			Mess const & getMess() const { return mess; }
 
 			Project const & getProject() const { return *current; }
 
+			Project const & getMainProject() const { return life; }
+
 			std::string const & getCurrentName() const { return currentName; }
+
 
 			bool moveToChild(std::string childName);
 
@@ -35,18 +36,26 @@ namespace cli {
 
 			void moveTop();
 
+
+			void addMess(Mess const & m);
+
+
 			void setLastResult(int r) { lastResult = r; }
 
-			int getLastResult() { return lastResult; }
+			int getLastResult() const { return lastResult; }
+
+			bool modified() const { return pendingChanges; }
+
+			void resetModified() { pendingChanges = false; }
 		private:
 			Project life;
-			Mess mess;
 			Project * current;
 			std::string currentName;
 			std::stack<Project *> parents;
 			std::stack<std::string> parentNames;
 
 			int lastResult;
+			bool pendingChanges;
 	};
 
 }

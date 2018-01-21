@@ -3,17 +3,13 @@
 #include<map>
 #include<vector>
 #include<experimental/filesystem>
-#include<fstream>
-
-#include"nlohmann/json.hpp"
 
 #include"projects/Project.hpp"
 #include"projects/Todo.hpp"
 #include"projects/Mess.hpp"
+#include"database/Files.hpp"
 #include"cli/Context.hpp"
 #include"cli/Cli.hpp"
-
-using json = nlohmann::json;
 
 using Project = projects::Project;
 using Subprojects = projects::Subprojects;
@@ -32,20 +28,22 @@ int main(int argc, char * argv[]) {
 
 	std::experimental::filesystem::path messFile = dataDir;
 	messFile /= MESS_FILE;
-	std::fstream messFileStream(messFile);
-
-	Mess mess;
-	messFileStream >> mess;
 
 	std::experimental::filesystem::path projectsFile = dataDir;
 	projectsFile /= PROJECTS_FILE;
-	std::fstream projectsFileStream(projectsFile);
 
- json projects;
-	std::string blas;
-	projectsFileStream >> projects;
+	Context context(database::readProject(projectsFile));
 
-	Context context(projects, std::move(mess));
+	std::function<void()> save = [&projectsFile, &context]() {
+		database::writeProject(projectsFile, context.getMainProject());
+		context.resetModified();
+	};
+
+	context.addMess(database::readMess(messFile));
+	if (context.modified()) {
+		save();
+		database::clearMess(messFile);
+	}
 
 	if (argc > 1) {
 		std::vector<std::string> cmdArgs;

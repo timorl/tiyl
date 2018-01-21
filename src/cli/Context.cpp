@@ -31,4 +31,12 @@ namespace cli {
 		parentNames = std::stack<std::string>();
 	}
 
+
+	void Context::addMess(Mess const & m) {
+		if (m.size() > 0) {
+			current->addToMess(m);
+			pendingChanges = true;
+		}
+	}
+
 }

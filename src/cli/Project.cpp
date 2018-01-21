@@ -3,6 +3,7 @@
 #include<iostream>
 
 #include"projects/Project.hpp"
+#include"projects/Mess.hpp"
 #include"projects/Todo.hpp"
 #include"cli/Pretty.hpp"
 
@@ -11,8 +12,21 @@ namespace cli {
 	using Project = projects::Project;
 	using Subprojects = projects::Subprojects;
 	using Subproject = projects::Subproject;
+	using Mess = projects::Mess;
 	using Todo = projects::Todo;
 	using TodoList = projects::TodoList;
+
+	void printMess(Mess const & mess) {
+		if (mess.empty()) {
+			std::cout << lessVisible("No mess.") << std::endl;
+			return;
+		}
+		std::cout << brightWhite("Mess:") << std::endl;
+		for (std::string const & m : mess) {
+			std::cout << " ";
+			std::cout << red(m) << std::endl;
+		}
+	}
 
 	void printAction(Todo const & action) {
 		std::cout << action << std::endl;
@@ -54,10 +68,12 @@ namespace cli {
 	int projectShow(Context & c, std::vector<std::string> const &) {
 		Project const & project = c.getProject();
 		Subprojects const & subprojects = project.getSubprojects();
+		Mess const & mess = project.getMess();
 		TodoList const & actions = project.getActions();
 		std::cout << brightWhite("Project: ") << c.getCurrentName() << std::endl;
 		std::cout << brightWhite("Description: ") << project.getDescription() << std::endl;
 		std::cout << "This project is " << (project.isActionable()?"":red("not")) << " actionable." << std::endl;
+		printMess(mess);
 		printActions(actions);
 		printSubprojectNames(subprojects);
 		return 0;

@@ -6,6 +6,7 @@
 
 #include"nlohmann/json.hpp"
 
+#include"projects/Mess.hpp"
 #include"projects/Todo.hpp"
 
 namespace projects {
@@ -27,11 +28,17 @@ namespace projects {
 
 			TodoList const & getActions() const { return actions; }
 
+			Mess const & getMess() const { return mess; }
+
 			void setDescription(std::string const & d) { description = d; }
 
 			void setSubprojects(Subprojects const & s) { subprojects = s; }
 
 			void setActions(TodoList const & a) { actions = a; }
+
+			void setMess(Mess const & m) { mess = m; }
+
+			void addToMess(Mess const & m);
 
 			Project & getSubproject(std::string name);
 
@@ -47,6 +54,7 @@ namespace projects {
 			std::string description;
 			Subprojects subprojects;
 			TodoList actions;
+			Mess mess;
 	};
 
 	void to_json(json & j, Project const & p);
@@ -54,6 +62,8 @@ namespace projects {
 	void from_json(json const & j, Project & p);
 
 	void accumulateAll(Subprojects & sps, Subproject const & sp);
+
+	void accumulateMess(Mess & m, Subproject const & sp);
 
 	void accumulateActions(TodoList & a, Subproject const & sp);
 

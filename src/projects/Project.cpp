@@ -6,6 +6,10 @@ namespace projects {
 		return subprojects[name];
 	}
 
+	void Project::addToMess(Mess const & m) {
+		mess.insert(mess.end(), m.begin(), m.end());
+	}
+
 	bool Project::isActionable() const {
 		if (!actions.empty()) {
 			return true;
@@ -27,6 +31,9 @@ namespace projects {
 		if (p.getActions().size()) {
 			j.emplace("actions", p.getActions());
 		}
+		if (p.getMess().size()) {
+			j.emplace("mess", p.getMess());
+		}
 	}
 
 	void from_json(json const & j, Project & p) {
@@ -37,12 +44,21 @@ namespace projects {
 		if (j.count("actions")) {
 			p.setActions(j.at("actions").get<TodoList>());
 		}
+		if (j.count("mess")) {
+			p.setMess(j.at("mess").get<Mess>());
+		}
 	}
 
 
 	void accumulateAll(Subprojects & sps, Subproject const & sp) {
 		sps.emplace(sp);
 		sp.second.accumulateFromSubprojects(sps, accumulateAll);
+	}
+
+	void accumulateMess(Mess & m, Subproject const & sp) {
+		Mess const & localMess = sp.second.getMess();
+		m.insert(m.end(), localMess.begin(), localMess.end());
+		sp.second.accumulateFromSubprojects(m, accumulateMess);
 	}
 
 	void accumulateActions(TodoList & a, Subproject const & sp) {

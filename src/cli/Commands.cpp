@@ -15,8 +15,9 @@ namespace cli {
 	using Mess = projects::Mess;
 
 	int status(Context & c, std::vector<std::string> const &) {
-		Mess const & mess = c.getMess();
 		Project const & project = c.getProject();
+		Mess mess = project.getMess();
+		project.accumulateFromSubprojects(mess, projects::accumulateMess);
 		int messSize = mess.size();
 		Subprojects all;
 		project.accumulateFromSubprojects(all, projects::accumulateAll);
@@ -48,7 +49,6 @@ namespace cli {
 			subprojectName = requestChoice(names, "subproject");
 		}
 		if ( c.moveToChild(subprojectName) ) {
-			std::cout << "Moving to " << subprojectName << "." << std::endl;
 			return 0;
 		}
 		return 1;
