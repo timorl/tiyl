@@ -30,6 +30,15 @@ namespace cli {
 		}
 	}
 
+	void printSubprojectShort(Subproject const & subproject) {
+		std::string toPrint = subproject.first;
+		Project const & project = subproject.second;
+		if (!project.isActionable()) {
+			toPrint = red(toPrint);
+		}
+		std::cout << toPrint << std::endl;
+	}
+
 	void printSubprojectNames(Subprojects const & subprojects) {
 		if (subprojects.empty()) {
 			std::cout << lessVisible("No subprojects.") << std::endl;
@@ -38,7 +47,7 @@ namespace cli {
 		std::cout << brightWhite("Subprojects:") << std::endl;
 		for (Subproject const & subproject : subprojects) {
 			std::cout << " ";
-			std::cout << subproject.first << std::endl;
+			printSubprojectShort(subproject);
 		}
 	}
 
