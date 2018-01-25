@@ -12,7 +12,7 @@ namespace cli {
 		return false;
 	}
 
-	void commandLine(Context & c) {
+	void commandLine(Context & c, std::function<void(Context &)> save) {
 		std::string input;
 		while (prompt(c, input)) {
 			if (input.length() == 0) {
@@ -27,6 +27,7 @@ namespace cli {
 			std::vector<std::string> args;
 			std::copy(std::istream_iterator<std::string>(inputStream), std::istream_iterator<std::string>(), std::back_inserter(args));
 			c.setLastResult(singleCommand(commands, c, name, args));
+			save(c);
 		}
 		std::cout << "Bye!" << std::endl;
 	}

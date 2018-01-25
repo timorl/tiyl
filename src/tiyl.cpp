@@ -34,25 +34,27 @@ int main(int argc, char * argv[]) {
 
 	Context context(database::readProject(projectsFile));
 
-	std::function<void()> save = [&projectsFile, &context]() {
-		database::writeProject(projectsFile, context.getMainProject());
-		context.resetModified();
+	std::function<void(Context &)> save = [projectsFile](Context & context) {
+		if (context.modified()) {
+			database::writeProject(projectsFile, context.getMainProject());
+			context.resetModified();
+		}
 	};
 
 	context.addMess(database::readMess(messFile));
-	if (context.modified()) {
-		save();
-		database::clearMess(messFile);
-	}
+	save(context);
+	database::clearMess(messFile);
 
 	if (argc > 1) {
 		std::vector<std::string> cmdArgs;
 		for (int i = 2; i < argc; i++) {
 			cmdArgs.push_back(argv[i]);
 		}
-		return cli::singleCommand(cli::commands, context, argv[1], cmdArgs);
+		int result = cli::singleCommand(cli::commands, context, argv[1], cmdArgs);
+		save(context);
+		return result;
 	}
 
-	cli::commandLine(context);
+	cli::commandLine(context, save);
 	return 0;
 }

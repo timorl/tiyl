@@ -7,7 +7,7 @@
 
 namespace cli {
 
-	void commandLine(Context & c);
+	void commandLine(Context & c, std::function<void(Context &)> save);
 
 }
 #endif
