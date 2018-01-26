@@ -23,7 +23,7 @@ namespace cli {
 		project.accumulateFromSubprojects(all, projects::accumulateAll);
 		int allSize = all.size();
 		TodoList actions;
-		project.accumulateFromSubprojects(actions, projects::accumulateActions);
+		project.accumulateFromSubprojects(actions, projects::accumulateTodos);
 		int actionsSize = actions.size();
 		Subprojects nonactionable;
 		project.accumulateFromSubprojects(nonactionable, projects::accumulateNonactionable);
@@ -38,13 +38,17 @@ namespace cli {
 	int down(Context & c, std::vector<std::string> const & args) {
 		Project const & project = c.getProject();
 		Subprojects const & subprojects = project.getSubprojects();
+		if (subprojects.empty()) {
+			std::cout << "No subprojects." << std::endl;
+			return 2;
+		}
 		std::vector<std::string> names;
 		for (Subproject const & subproject : subprojects) {
 			names.push_back(subproject.first);
 		}
 		std::string subprojectName;
 		if ( !args.empty() ) {
-			subprojectName = names[std::stoi(args[0])];
+			subprojectName = decodeChoice(names, "subproject", args[0]);
 		} else {
 			subprojectName = requestChoice(names, "subproject");
 		}

@@ -11,7 +11,7 @@ namespace projects {
 	}
 
 	bool Project::isActionable() const {
-		if (!actions.empty()) {
+		if (!todos.empty()) {
 			return true;
 		}
 		bool result = false;
@@ -28,8 +28,8 @@ namespace projects {
 		if (p.getSubprojects().size()) {
 			j.emplace("subprojects", p.getSubprojects());
 		}
-		if (p.getActions().size()) {
-			j.emplace("actions", p.getActions());
+		if (p.getTodos().size()) {
+			j.emplace("todos", p.getTodos());
 		}
 		if (p.getMess().size()) {
 			j.emplace("mess", p.getMess());
@@ -41,8 +41,8 @@ namespace projects {
 		if (j.count("subprojects")) {
 			p.setSubprojects(j.at("subprojects").get<Subprojects>());
 		}
-		if (j.count("actions")) {
-			p.setActions(j.at("actions").get<TodoList>());
+		if (j.count("todos")) {
+			p.setTodos(j.at("todos").get<TodoList>());
 		}
 		if (j.count("mess")) {
 			p.setMess(j.at("mess").get<Mess>());
@@ -61,14 +61,14 @@ namespace projects {
 		sp.second.accumulateFromSubprojects(m, accumulateMess);
 	}
 
-	void accumulateActions(TodoList & a, Subproject const & sp) {
-		TodoList const & localActions = sp.second.getActions();
-		a.insert(a.end(), localActions.begin(), localActions.end());
-		sp.second.accumulateFromSubprojects(a, accumulateActions);
+	void accumulateTodos(TodoList & a, Subproject const & sp) {
+		TodoList const & localTodos = sp.second.getTodos();
+		a.insert(a.end(), localTodos.begin(), localTodos.end());
+		sp.second.accumulateFromSubprojects(a, accumulateTodos);
 	}
 
 	void accumulateNonactionable(Subprojects & sps, Subproject const & sp) {
-		if (sp.second.getActions().empty()) {
+		if (sp.second.getTodos().empty()) {
 			sps.emplace(sp);
 		}
 		sp.second.accumulateFromSubprojects(sps, accumulateNonactionable);

@@ -5,6 +5,7 @@
 
 #include"cli/Utils.hpp"
 #include"cli/Context.hpp"
+#include"cli/Todo.hpp"
 #include"cli/Project.hpp"
 
 namespace cli {
@@ -20,6 +21,7 @@ namespace cli {
 	const std::map<std::string, Command> commands = {
 		{"status", status},
 		{"project", project},
+		{"todo", todo},
 		{"down", down},
 		{"up", up},
 		{"top", top},

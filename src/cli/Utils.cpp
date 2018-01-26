@@ -27,19 +27,37 @@ namespace cli {
 		return result;
 	}
 
+	std::string decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer) {
+		unsigned int id;
+		try {
+			id = std::stoul(answer);
+		} catch (...) {
+			std::cout << "Pick a number." << std::endl;
+			return "";
+		}
+		if ( id >= from.size() ) {
+			std::cout << "No " << what << " with id " << id << "." << std::endl;
+			return "";
+		}
+		return from[id];
+	}
+
 	std::string requestChoice(std::vector<std::string> const & from, std::string const & what) {
 		std::cout << "Pick a " << what << ":" << std::endl;
 		for (unsigned int i = 0; i < from.size(); i++) {
 			std::cout << i << ". " << from.at(i) << std::endl;
 		}
-		unsigned int choice = from.size();
-		while ( choice >= from.size() ) {
+		std::string choice;
+		while ( choice.empty() ) {
 			std::cout << "Your choice: ";
 			std::string answer;
-			std::getline(std::cin, answer);
-			choice = std::stoul(answer);
+			if ( !std::getline(std::cin, answer) ) {
+				std::cin.clear();
+				return "";
+			}
+			choice = decodeChoice(from, what, answer);
 		}
-		return from.at(choice);
+		return choice;
 	}
 
 }

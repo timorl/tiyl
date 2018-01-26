@@ -26,7 +26,7 @@ namespace projects {
 
 			Subprojects const & getSubprojects() const { return subprojects; }
 
-			TodoList const & getActions() const { return actions; }
+			TodoList const & getTodos() const { return todos; }
 
 			Mess const & getMess() const { return mess; }
 
@@ -34,7 +34,7 @@ namespace projects {
 
 			void setSubprojects(Subprojects const & s) { subprojects = s; }
 
-			void setActions(TodoList const & a) { actions = a; }
+			void setTodos(TodoList const & a) { todos = a; }
 
 			void setMess(Mess const & m) { mess = m; }
 
@@ -53,7 +53,7 @@ namespace projects {
 		private:
 			std::string description;
 			Subprojects subprojects;
-			TodoList actions;
+			TodoList todos;
 			Mess mess;
 	};
 
@@ -65,7 +65,7 @@ namespace projects {
 
 	void accumulateMess(Mess & m, Subproject const & sp);
 
-	void accumulateActions(TodoList & a, Subproject const & sp);
+	void accumulateTodos(TodoList & a, Subproject const & sp);
 
 	void accumulateNonactionable(Subprojects & sps, Subproject const & sp);
 

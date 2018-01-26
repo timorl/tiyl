@@ -6,6 +6,7 @@
 #include"projects/Mess.hpp"
 #include"projects/Todo.hpp"
 #include"cli/Pretty.hpp"
+#include"cli/Todo.hpp"
 
 namespace cli {
 
@@ -25,22 +26,6 @@ namespace cli {
 		for (std::string const & m : mess) {
 			std::cout << " ";
 			std::cout << red(m) << std::endl;
-		}
-	}
-
-	void printAction(Todo const & action) {
-		std::cout << action << std::endl;
-	}
-
-	void printActions(TodoList const & actions) {
-		if (actions.empty()) {
-			std::cout << lessVisible("No actions.") << std::endl;
-			return;
-		}
-		std::cout << brightWhite("Actions:") << std::endl;
-		for (Todo const & action : actions) {
-			std::cout << " ";
-			printAction(action);
 		}
 	}
 
@@ -69,12 +54,12 @@ namespace cli {
 		Project const & project = c.getProject();
 		Subprojects const & subprojects = project.getSubprojects();
 		Mess const & mess = project.getMess();
-		TodoList const & actions = project.getActions();
+		TodoList const & todos = project.getTodos();
 		std::cout << brightWhite("Project: ") << c.getCurrentName() << std::endl;
 		std::cout << brightWhite("Description: ") << project.getDescription() << std::endl;
 		std::cout << "This project is " << (project.isActionable()?"":red("not")) << " actionable." << std::endl;
 		printMess(mess);
-		printActions(actions);
+		printTodoNames(todos);
 		printSubprojectNames(subprojects);
 		return 0;
 	}
