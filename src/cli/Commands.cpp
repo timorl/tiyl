@@ -46,13 +46,16 @@ namespace cli {
 		for (Subproject const & subproject : subprojects) {
 			names.push_back(subproject.first);
 		}
-		std::string subprojectName;
+		int subprojectId;
 		if ( !args.empty() ) {
-			subprojectName = decodeChoice(names, "subproject", args[0]);
+			subprojectId = decodeChoice(names, "subproject", args[0]);
 		} else {
-			subprojectName = requestChoice(names, "subproject");
+			subprojectId = requestChoice(names, "subproject");
 		}
-		if ( c.moveToChild(subprojectName) ) {
+		if ( subprojectId == -1 ) {
+			return 1;
+		}
+		if ( c.moveToChild(names.at(subprojectId)) ) {
 			return 0;
 		}
 		return 1;

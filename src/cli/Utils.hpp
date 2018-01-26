@@ -16,9 +16,9 @@ namespace cli {
 
 	std::string splitSubcommand(Arguments const & oldArgs, Arguments & newArgs, std::string const & defaultCommand);
 
-	std::string decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer);
+	int decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer);
 
-	std::string requestChoice(std::vector<std::string> const & from, std::string const & what);
+	int requestChoice(std::vector<std::string> const & from, std::string const & what);
 
 }
 #endif

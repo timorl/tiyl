@@ -27,33 +27,33 @@ namespace cli {
 		return result;
 	}
 
-	std::string decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer) {
+	int decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer) {
 		unsigned int id;
 		try {
 			id = std::stoul(answer);
 		} catch (...) {
-			std::cout << "Pick a number." << std::endl;
-			return "";
+			std::cout << "Pick a natural number." << std::endl;
+			return -1;
 		}
 		if ( id >= from.size() ) {
 			std::cout << "No " << what << " with id " << id << "." << std::endl;
-			return "";
+			return -1;
 		}
-		return from[id];
+		return id;
 	}
 
-	std::string requestChoice(std::vector<std::string> const & from, std::string const & what) {
+	int requestChoice(std::vector<std::string> const & from, std::string const & what) {
 		std::cout << "Pick a " << what << ":" << std::endl;
 		for (unsigned int i = 0; i < from.size(); i++) {
 			std::cout << i << ". " << from.at(i) << std::endl;
 		}
-		std::string choice;
-		while ( choice.empty() ) {
+		int choice = -1;
+		while ( choice == -1 ) {
 			std::cout << "Your choice: ";
 			std::string answer;
 			if ( !std::getline(std::cin, answer) ) {
 				std::cin.clear();
-				return "";
+				return -1;
 			}
 			choice = decodeChoice(from, what, answer);
 		}

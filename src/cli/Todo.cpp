@@ -32,16 +32,16 @@ namespace cli {
 		for (auto const & t : todos) {
 			names.push_back(t.first);
 		}
-		std::string todoName;
+		int todoId;
 		if ( !args.empty() ) {
-			todoName = decodeChoice(names, "todo", args[0]);
+			todoId = decodeChoice(names, "todo", args[0]);
 		} else {
-			todoName = requestChoice(names, "todo");
+			todoId = requestChoice(names, "todo");
 		}
-		if (todoName.empty()) {
+		if (todoId == -1) {
 			return 1;
 		}
-		c.delTodo(todoName);
+		c.delTodo(names.at(todoId));
 		return 0;
 	}
 
@@ -80,15 +80,16 @@ namespace cli {
 		for (auto const & t : todos) {
 			names.push_back(t.first);
 		}
-		std::string todoName;
+		int todoId;
 		if ( !args.empty() ) {
-			todoName = decodeChoice(names, "todo", args[0]);
+			todoId = decodeChoice(names, "todo", args[0]);
 		} else {
-			todoName = requestChoice(names, "todo");
+			todoId = requestChoice(names, "todo");
 		}
-		if (todoName.empty()) {
+		if (todoId == -1) {
 			return 1;
 		}
+		std::string todoName = names.at(todoId);
 		printTodoName(todoName, todos.at(todoName));
 		return 0;
 	}
