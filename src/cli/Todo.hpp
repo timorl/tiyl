@@ -14,6 +14,10 @@ namespace cli {
 
 	void printTodoNames(TodoList const & todos);
 
+	int todoDone(Context & c, std::vector<std::string> const & args);
+
+	int todoAdd(Context & c, std::vector<std::string> const & args);
+
 	int todoList(Context & c, std::vector<std::string> const &);
 
 	int todoShow(Context & c, std::vector<std::string> const & args);
@@ -23,6 +27,8 @@ namespace cli {
 	const std::map<std::string, Command> todoCommands = {
 		{"list", todoList},
 		{"show", todoShow},
+		{"add", todoAdd},
+		{"done", todoDone},
 	};
 
 }

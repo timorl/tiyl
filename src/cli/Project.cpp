@@ -57,7 +57,7 @@ namespace cli {
 		TodoList const & todos = project.getTodos();
 		std::cout << brightWhite("Project: ") << c.getCurrentName() << std::endl;
 		std::cout << brightWhite("Description: ") << project.getDescription() << std::endl;
-		std::cout << "This project is " << (project.isActionable()?"":red("not")) << " actionable." << std::endl;
+		std::cout << "This project is" << (project.isActionable()?"":red(" not")) << " actionable." << std::endl;
 		printMess(mess);
 		printTodoNames(todos);
 		printSubprojectNames(subprojects);

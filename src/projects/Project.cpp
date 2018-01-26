@@ -2,6 +2,19 @@
 
 namespace projects {
 
+	bool Project::addTodo(Todo && t) {
+		if (todos.count(t)) {
+			return false;
+		}
+		todos[t] = t;
+		return true;
+	}
+
+	void Project::delTodo(std::string const & name) {
+		todos.erase(name);
+	}
+
+
 	Project & Project::getSubproject(std::string name) {
 		return subprojects[name];
 	}
@@ -63,7 +76,7 @@ namespace projects {
 
 	void accumulateTodos(TodoList & a, Subproject const & sp) {
 		TodoList const & localTodos = sp.second.getTodos();
-		a.insert(a.end(), localTodos.begin(), localTodos.end());
+		a.insert(localTodos.begin(), localTodos.end());
 		sp.second.accumulateFromSubprojects(a, accumulateTodos);
 	}
 

@@ -6,8 +6,8 @@
 
 namespace cli {
 
-	void printTodoName(Todo const & t) {
-		std::cout << t << std::endl;
+	void printTodoName(std::string const & name, Todo const &) {
+		std::cout << name << std::endl;
 	}
 
 	void printTodoNames(TodoList const & todos) {
@@ -16,10 +16,52 @@ namespace cli {
 			return;
 		}
 		std::cout << brightWhite("Todos:") << std::endl;
-		for (Todo const & t : todos) {
+		for (auto const & t : todos) {
 			std::cout << " ";
-			printTodoName(t);
+			printTodoName(t.first, t.second);
 		}
+	}
+
+	int todoDone(Context & c, std::vector<std::string> const & args) {
+		TodoList const & todos = c.getProject().getTodos();
+		if (todos.empty()) {
+			std::cout << "No todos." << std::endl;
+			return 2;
+		}
+		std::vector<std::string> names;
+		for (auto const & t : todos) {
+			names.push_back(t.first);
+		}
+		std::string todoName;
+		if ( !args.empty() ) {
+			todoName = decodeChoice(names, "todo", args[0]);
+		} else {
+			todoName = requestChoice(names, "todo");
+		}
+		if (todoName.empty()) {
+			return 1;
+		}
+		c.delTodo(todoName);
+		return 0;
+	}
+
+	Todo buildTodo(std::vector<std::string> const & args) {
+		std::string name;
+		if ( !args.empty() ) {
+			name = args[0];
+		} else {
+			std::cout << "Name: ";
+			std::cin >> name;
+		}
+		return Todo(name);
+	}
+
+	int todoAdd(Context & c, std::vector<std::string> const & args) {
+		if ( !c.addTodo( buildTodo(args) ) ) {
+			std::cout << "Todo name conflict." << std::endl;
+			return 1;
+		}
+		return 0;
 	}
 
 	int todoList(Context & c, std::vector<std::string> const &) {
@@ -35,8 +77,8 @@ namespace cli {
 			return 2;
 		}
 		std::vector<std::string> names;
-		for (Todo const & t : todos) {
-			names.push_back(t);
+		for (auto const & t : todos) {
+			names.push_back(t.first);
 		}
 		std::string todoName;
 		if ( !args.empty() ) {
@@ -47,7 +89,7 @@ namespace cli {
 		if (todoName.empty()) {
 			return 1;
 		}
-		printTodoName(todoName);
+		printTodoName(todoName, todos.at(todoName));
 		return 0;
 	}
 

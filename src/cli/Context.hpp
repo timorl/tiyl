@@ -4,11 +4,13 @@
 #include<stack>
 
 #include"projects/Project.hpp"
+#include"projects/Todo.hpp"
 #include"projects/Mess.hpp"
 
 namespace cli {
 
 	using Project = projects::Project;
+	using Todo = projects::Todo;
 	using Mess = projects::Mess;
 
 	const std::string ROOT_NAME("Life");
@@ -38,6 +40,10 @@ namespace cli {
 
 
 			void addMess(Mess const & m);
+
+			bool addTodo(Todo && t);
+
+			void delTodo(std::string const & name);
 
 
 			void setLastResult(int r) { lastResult = r; }
