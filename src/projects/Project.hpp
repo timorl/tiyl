@@ -41,6 +41,10 @@ namespace projects {
 
 			void addToMess(Mess const & m);
 
+			void addMess(std::string const & name);
+
+			void delMess(std::string const & name);
+
 			bool addTodo(Todo && t);
 
 			void delTodo(std::string const & name);

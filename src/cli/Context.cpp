@@ -39,6 +39,16 @@ namespace cli {
 		}
 	}
 
+	void Context::addMess(std::string const & name) {
+		current->addMess(name);
+		pendingChanges = true;
+	}
+
+	void Context::delMess(std::string const & name) {
+		current->delMess(name);
+		pendingChanges = true;
+	}
+
 	bool Context::addTodo(Todo && t) {
 		if ( current->addTodo(std::move(t)) ) {
 			pendingChanges = true;

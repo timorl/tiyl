@@ -51,7 +51,7 @@ namespace cli {
 			name = args[0];
 		} else {
 			std::cout << "Name: ";
-			std::cin >> name;
+			std::getline(std::cin, name);
 		}
 		return Todo(name);
 	}

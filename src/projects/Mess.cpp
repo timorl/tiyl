@@ -6,7 +6,7 @@ namespace projects {
 		std::string item;
 		while (std::getline(is, item)) {
 			if (item.length()) {
-				l.push_back(item);
+				l.insert(item);
 			}
 		}
 		return is;

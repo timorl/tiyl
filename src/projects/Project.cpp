@@ -2,6 +2,18 @@
 
 namespace projects {
 
+	void Project::addToMess(Mess const & m) {
+		mess.insert(m.begin(), m.end());
+	}
+
+	void Project::addMess(std::string const & name) {
+		mess.insert(name);
+	}
+
+	void Project::delMess(std::string const & name) {
+		mess.erase(name);
+	}
+
 	bool Project::addTodo(Todo && t) {
 		if (todos.count(t)) {
 			return false;
@@ -19,10 +31,6 @@ namespace projects {
 		return subprojects[name];
 	}
 
-	void Project::addToMess(Mess const & m) {
-		mess.insert(mess.end(), m.begin(), m.end());
-	}
-
 	bool Project::isActionable() const {
 		if (!todos.empty()) {
 			return true;
@@ -30,7 +38,7 @@ namespace projects {
 		bool result = false;
 		accumulateFromSubprojects(result,
 			[](bool & result, Subproject const & sp){
-				return result || sp.second.isActionable();
+				result = result || sp.second.isActionable();
 			}
 		);
 		return result;
@@ -70,7 +78,7 @@ namespace projects {
 
 	void accumulateMess(Mess & m, Subproject const & sp) {
 		Mess const & localMess = sp.second.getMess();
-		m.insert(m.end(), localMess.begin(), localMess.end());
+		m.insert(localMess.begin(), localMess.end());
 		sp.second.accumulateFromSubprojects(m, accumulateMess);
 	}
 

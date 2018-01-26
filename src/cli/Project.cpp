@@ -7,6 +7,7 @@
 #include"projects/Todo.hpp"
 #include"cli/Pretty.hpp"
 #include"cli/Todo.hpp"
+#include"cli/Mess.hpp"
 
 namespace cli {
 
@@ -16,18 +17,6 @@ namespace cli {
 	using Mess = projects::Mess;
 	using Todo = projects::Todo;
 	using TodoList = projects::TodoList;
-
-	void printMess(Mess const & mess) {
-		if (mess.empty()) {
-			std::cout << lessVisible("No mess.") << std::endl;
-			return;
-		}
-		std::cout << brightWhite("Mess:") << std::endl;
-		for (std::string const & m : mess) {
-			std::cout << " ";
-			std::cout << red(m) << std::endl;
-		}
-	}
 
 	void printSubprojectShort(Subproject const & subproject) {
 		std::string toPrint = subproject.first;
