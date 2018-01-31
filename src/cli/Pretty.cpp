@@ -7,6 +7,7 @@ namespace cli {
 
 	const int NORMALIZE = 0;
 	const int RED = 31;
+	const int CYAN = 36;
 	const int BRIGHT_BLACK = 90;
 	const int BRIGHT_WHITE = 97;
 
@@ -24,6 +25,10 @@ namespace cli {
 
 	std::string red(std::string input) {
 		return code(RED) + input + code(NORMALIZE);
+	}
+
+	std::string cyan(std::string input) {
+		return code(CYAN) + input + code(NORMALIZE);
 	}
 
 }

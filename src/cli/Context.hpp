@@ -49,6 +49,10 @@ namespace cli {
 
 			void delTodo(std::string const & name);
 
+			void freeze();
+
+			void thaw();
+
 
 			void setLastResult(int r) { lastResult = r; }
 

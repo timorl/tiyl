@@ -10,10 +10,16 @@ namespace cli {
 
 	int projectShow(Context & c, std::vector<std::string> const &);
 
+	int projectFreeze(Context & c, std::vector<std::string> const &);
+
+	int projectThaw(Context & c, std::vector<std::string> const &);
+
 	int project(Context & c, std::vector<std::string> const & args);
 
 	const std::map<std::string, Command> projectCommands = {
 		{"show", projectShow},
+		{"freeze", projectFreeze},
+		{"thaw", projectThaw},
 	};
 
 }

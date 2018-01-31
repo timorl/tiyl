@@ -21,7 +21,9 @@ namespace cli {
 	void printSubprojectShort(Subproject const & subproject) {
 		std::string toPrint = subproject.first;
 		Project const & project = subproject.second;
-		if (!project.isActionable()) {
+		if (project.isFrozen()) {
+			toPrint = cyan(toPrint);
+		} else if (!project.isActionable()) {
 			toPrint = red(toPrint);
 		}
 		std::cout << toPrint << std::endl;
@@ -46,10 +48,24 @@ namespace cli {
 		TodoList const & todos = project.getTodos();
 		std::cout << brightWhite("Project: ") << c.getCurrentName() << std::endl;
 		std::cout << brightWhite("Description: ") << project.getDescription() << std::endl;
-		std::cout << "This project is" << (project.isActionable()?"":red(" not")) << " actionable." << std::endl;
+		if (project.isFrozen()) {
+			std::cout << "This project is " << cyan("frozen") << "." << std::endl;
+		} else {
+			std::cout << "This project is" << (project.isActionable()?"":red(" not")) << " actionable." << std::endl;
+		}
 		printMess(mess);
 		printTodoNames(todos);
 		printSubprojectNames(subprojects);
+		return 0;
+	}
+
+	int projectFreeze(Context & c, std::vector<std::string> const &) {
+		c.freeze();
+		return 0;
+	}
+
+	int projectThaw(Context & c, std::vector<std::string> const &) {
+		c.thaw();
 		return 0;
 	}
 

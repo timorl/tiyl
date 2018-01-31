@@ -10,5 +10,7 @@ namespace cli {
 
 	std::string red(std::string input);
 
+	std::string cyan(std::string input);
+
 }
 #endif

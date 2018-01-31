@@ -46,14 +46,17 @@ namespace projects {
 
 	void to_json(json & j, Project const & p) {
 		j = {{"description", p.getDescription()}};
-		if (p.getSubprojects().size()) {
+		if (!p.getSubprojects().empty()) {
 			j.emplace("subprojects", p.getSubprojects());
 		}
-		if (p.getTodos().size()) {
+		if (!p.getTodos().empty()) {
 			j.emplace("todos", p.getTodos());
 		}
-		if (p.getMess().size()) {
+		if (!p.getMess().empty()) {
 			j.emplace("mess", p.getMess());
+		}
+		if (p.isFrozen()) {
+			j.emplace("frozen", p.isFrozen());
 		}
 	}
 
@@ -67,6 +70,11 @@ namespace projects {
 		}
 		if (j.count("mess")) {
 			p.setMess(j.at("mess").get<Mess>());
+		}
+		if (j.count("frozen")) {
+			p.setFrozen(j.at("frozen").get<bool>());
+		} else {
+			p.setFrozen(false);
 		}
 	}
 

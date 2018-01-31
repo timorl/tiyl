@@ -30,6 +30,8 @@ namespace projects {
 
 			Mess const & getMess() const { return mess; }
 
+			bool isFrozen() const { return frozen; }
+
 			void setDescription(std::string const & d) { description = d; }
 
 			void setSubprojects(Subprojects const & s) { subprojects = s; }
@@ -37,6 +39,8 @@ namespace projects {
 			void setTodos(TodoList const & a) { todos = a; }
 
 			void setMess(Mess const & m) { mess = m; }
+
+			void setFrozen(bool f) { frozen = f; }
 
 
 			void addToMess(Mess const & m);
@@ -64,6 +68,7 @@ namespace projects {
 			Subprojects subprojects;
 			TodoList todos;
 			Mess mess;
+			bool frozen;
 	};
 
 	void to_json(json & j, Project const & p);

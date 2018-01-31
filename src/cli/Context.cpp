@@ -62,4 +62,14 @@ namespace cli {
 		pendingChanges = true;
 	}
 
+	void Context::freeze() {
+		current->setFrozen(true);
+		pendingChanges = true;
+	}
+
+	void Context::thaw() {
+		current->setFrozen(false);
+		pendingChanges = true;
+	}
+
 }
