@@ -62,6 +62,19 @@ namespace cli {
 		pendingChanges = true;
 	}
 
+	bool Context::addSubproject(Subproject && s) {
+		if ( current->addSubproject(std::move(s)) ) {
+			pendingChanges = true;
+			return true;
+		}
+		return false;
+	}
+
+	void Context::delSubproject(std::string const & name) {
+		current->delSubproject(name);
+		pendingChanges = true;
+	}
+
 	void Context::freeze() {
 		current->setFrozen(true);
 		pendingChanges = true;

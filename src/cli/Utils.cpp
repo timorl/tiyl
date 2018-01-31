@@ -60,4 +60,16 @@ namespace cli {
 		return choice;
 	}
 
+	const std::set<std::string> meansYes{"y", "Y", "yes", "Yes"};
+
+	bool confirmation(std::string problem) {
+		std::string answer;
+		std::cout << problem << " Are you sure you want to continue [y/N]? ";
+		std::getline(std::cin, answer);
+		if ( meansYes.count(answer) ) {
+			return true;
+		}
+		return false;
+	}
+
 }

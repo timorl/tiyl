@@ -69,6 +69,61 @@ namespace cli {
 		return 0;
 	}
 
+	int projectDelete(Context & c, std::vector<std::string> const & args) {
+		Project const & project = c.getProject();
+		Subprojects const & subprojects = project.getSubprojects();
+		if (subprojects.empty()) {
+			std::cout << "No subprojects." << std::endl;
+			return 2;
+		}
+		std::vector<std::string> names;
+		for (Subproject const & subproject : subprojects) {
+			names.push_back(subproject.first);
+		}
+		int subprojectId;
+		if ( !args.empty() ) {
+			subprojectId = decodeChoice(names, "subproject", args[0]);
+		} else {
+			subprojectId = requestChoice(names, "subproject");
+		}
+		if ( subprojectId == -1 ) {
+			return 1;
+		}
+		std::string subprojectName = names[subprojectId];
+		if (!subprojects.at(subprojectName).empty()) {
+			if (!confirmation("The chosen subproject is not empty.")) {
+				return 3;
+			}
+		}
+		c.delSubproject(subprojectName);
+		return 0;
+	}
+
+	Subproject buildSubproject(std::vector<std::string> const & args) {
+		std::vector<std::string> newArgs;
+		std::string name = splitSubcommand(args, newArgs, "");
+		if (name.empty()) {
+			std::cout << "Name: ";
+			std::getline(std::cin, name);
+		}
+		std::string description;
+		if (!newArgs.empty()) {
+			description = newArgs[0];
+		} else {
+			std::cout << "Description: ";
+			std::getline(std::cin, description);
+		}
+		return Subproject(std::move(name), Project(description));
+	}
+
+	int projectCreate(Context & c, std::vector<std::string> const & args) {
+		if (!c.addSubproject(buildSubproject(args))) {
+			std::cout << "Subproject name conflict." << std::endl;
+			return 1;
+		}
+		return 0;
+	}
+
 	int project(Context & c, std::vector<std::string> const & args) {
 		std::vector<std::string> newArgs;
 		std::string subcommand = splitSubcommand(args, newArgs, "show");

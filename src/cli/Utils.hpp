@@ -20,5 +20,7 @@ namespace cli {
 
 	int requestChoice(std::vector<std::string> const & from, std::string const & what);
 
+	bool confirmation(std::string problem);
+
 }
 #endif

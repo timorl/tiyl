@@ -26,10 +26,18 @@ namespace projects {
 		todos.erase(name);
 	}
 
+	bool Project::addSubproject(Subproject && s) {
+		return subprojects.insert(std::move(s)).second;
+	}
+
+	void Project::delSubproject(std::string const & name) {
+		subprojects.erase(name);
+	}
 
 	Project & Project::getSubproject(std::string name) {
 		return subprojects[name];
 	}
+
 
 	bool Project::isActionable() const {
 		if (!todos.empty()) {
@@ -43,6 +51,11 @@ namespace projects {
 		);
 		return result;
 	}
+
+	bool Project::empty() const {
+		return subprojects.empty() && todos.empty() && mess.empty();
+	}
+
 
 	void to_json(json & j, Project const & p) {
 		j = {{"description", p.getDescription()}};

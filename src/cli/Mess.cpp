@@ -6,6 +6,7 @@
 #include"cli/Pretty.hpp"
 #include"cli/Movement.hpp"
 #include"cli/Todo.hpp"
+#include"cli/Project.hpp"
 
 namespace cli {
 
@@ -48,16 +49,26 @@ namespace cli {
 		return 0;
 	}
 
+	int subprojectFix(Context & c, std::vector<std::string> const & args, std::string const & messItem) {
+		int subprojectRes = projectCreate(c, args);
+		if ( subprojectRes != 0 ) {
+			return subprojectRes;
+		}
+		c.delMess(messItem);
+		return 0;
+	}
+
 	const std::vector<std::function<int(Context &, std::vector<std::string> const &, std::string const &)>> fixes = {
 		deleteFix,
 		downFix,
 		todoFix,
+		subprojectFix,
 	};
 
 	int messFixer(Context & c, std::vector<std::string> const & args, std::string const & messItem) {
 		std::vector<std::string> newArgs;
 		std::string methodChoice = splitSubcommand(args, newArgs, "");
-		std::vector<std::string> options{"Delete", "Push down", "Convert to todo"};
+		std::vector<std::string> options{"Delete", "Push down", "Convert to todo", "Convert to subproject"};
 		int optionId;
 		if ( !methodChoice.empty() ) {
 			optionId = decodeChoice(options, "option", methodChoice);

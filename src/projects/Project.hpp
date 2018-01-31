@@ -20,7 +20,9 @@ namespace projects {
 
 	class Project {
 		public:
-			Project() {}
+			Project() : frozen(false) {}
+
+			Project(std::string description) : description(description), frozen(false) {}
 
 			std::string const & getDescription() const { return description; }
 
@@ -53,9 +55,17 @@ namespace projects {
 
 			void delTodo(std::string const & name);
 
+			bool addSubproject(Subproject && s);
+
+			void delSubproject(std::string const & name);
+
 			Project & getSubproject(std::string name);
 
+
 			bool isActionable() const;
+
+			bool empty() const;
+
 
 			template<typename T, typename Fun>
 			void accumulateFromSubprojects(T & result, Fun accumulator) const {

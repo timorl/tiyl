@@ -14,12 +14,18 @@ namespace cli {
 
 	int projectThaw(Context & c, std::vector<std::string> const &);
 
+	int projectDelete(Context & c, std::vector<std::string> const & args);
+
+	int projectCreate(Context & c, std::vector<std::string> const & args);
+
 	int project(Context & c, std::vector<std::string> const & args);
 
 	const std::map<std::string, Command> projectCommands = {
 		{"show", projectShow},
 		{"freeze", projectFreeze},
 		{"thaw", projectThaw},
+		{"delete", projectDelete},
+		{"create", projectCreate},
 	};
 
 }

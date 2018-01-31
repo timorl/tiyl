@@ -10,6 +10,7 @@
 namespace cli {
 
 	using Project = projects::Project;
+	using Subproject = std::pair<std::string, Project>;
 	using Todo = projects::Todo;
 	using Mess = projects::Mess;
 
@@ -48,6 +49,10 @@ namespace cli {
 			bool addTodo(Todo && t);
 
 			void delTodo(std::string const & name);
+
+			bool addSubproject(Subproject && s);
+
+			void delSubproject(std::string const & name);
 
 			void freeze();
 
