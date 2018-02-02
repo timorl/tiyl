@@ -27,14 +27,23 @@ namespace cli {
 		return result;
 	}
 
-	int decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer) {
-		unsigned int id;
+	int decodeNumber(std::string answer) {
+	 int result = -1;
 		try {
-			id = std::stoul(answer);
+			result = std::stoul(answer);
 		} catch (...) {
 			std::cout << "Pick a natural number." << std::endl;
+		}
+		return result;
+	}
+
+	int decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer) {
+		int pid;
+		pid = decodeNumber(answer);
+		if (pid == -1) {
 			return -1;
 		}
+		unsigned int id = pid;
 		if ( id >= from.size() ) {
 			std::cout << "No " << what << " with id " << id << "." << std::endl;
 			return -1;

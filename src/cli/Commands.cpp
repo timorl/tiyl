@@ -4,17 +4,17 @@
 
 #include"projects/Project.hpp"
 #include"projects/Mess.hpp"
-#include"projects/Todo.hpp"
+#include"projects/Action.hpp"
 
 namespace cli {
 
 	using Project = projects::Project;
 	using Subprojects = projects::Subprojects;
 	using Subproject = projects::Subproject;
-	using TodoList = projects::TodoList;
+	using Actions = projects::Actions;
 	using Mess = projects::Mess;
 
-	int status(Context & c, std::vector<std::string> const &) {
+	int status(Context & c, Arguments const &) {
 		Project const & project = c.getProject();
 		Mess mess = project.getMess();
 		project.accumulateFromSubprojects(mess, projects::accumulateMess);
@@ -22,8 +22,8 @@ namespace cli {
 		Subprojects all;
 		project.accumulateFromSubprojects(all, projects::accumulateAll);
 		int allSize = all.size();
-		TodoList actions;
-		project.accumulateFromSubprojects(actions, projects::accumulateTodos);
+		Actions actions;
+		project.accumulateFromSubprojects(actions, projects::accumulateActions);
 		int actionsSize = actions.size();
 		Subprojects nonactionable;
 		project.accumulateFromSubprojects(nonactionable, projects::accumulateNonactionable);

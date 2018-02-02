@@ -8,11 +8,11 @@
 
 namespace cli {
 
-	int down(Context & c, std::vector<std::string> const & args);
+	int down(Context & c, Arguments const & args);
 
-	int up(Context & c, std::vector<std::string> const &);
+	int up(Context & c, Arguments const &);
 
-	int top(Context & c, std::vector<std::string> const &);
+	int top(Context & c, Arguments const &);
 
 }
 #endif

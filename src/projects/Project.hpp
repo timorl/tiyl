@@ -7,7 +7,7 @@
 #include"nlohmann/json.hpp"
 
 #include"projects/Mess.hpp"
-#include"projects/Todo.hpp"
+#include"projects/Action.hpp"
 
 namespace projects {
 
@@ -28,7 +28,7 @@ namespace projects {
 
 			Subprojects const & getSubprojects() const { return subprojects; }
 
-			TodoList const & getTodos() const { return todos; }
+			Actions const & getActions() const { return actions; }
 
 			Mess const & getMess() const { return mess; }
 
@@ -38,7 +38,7 @@ namespace projects {
 
 			void setSubprojects(Subprojects const & s) { subprojects = s; }
 
-			void setTodos(TodoList const & a) { todos = a; }
+			void setActions(Actions const & a) { actions = a; }
 
 			void setMess(Mess const & m) { mess = m; }
 
@@ -51,9 +51,9 @@ namespace projects {
 
 			void delMess(std::string const & name);
 
-			bool addTodo(Todo && t);
+			bool addAction(Action && t);
 
-			void delTodo(std::string const & name);
+			void delAction(std::string const & name);
 
 			bool addSubproject(Subproject && s);
 
@@ -76,7 +76,7 @@ namespace projects {
 		private:
 			std::string description;
 			Subprojects subprojects;
-			TodoList todos;
+			Actions actions;
 			Mess mess;
 			bool frozen;
 	};
@@ -89,7 +89,7 @@ namespace projects {
 
 	void accumulateMess(Mess & m, Subproject const & sp);
 
-	void accumulateTodos(TodoList & a, Subproject const & sp);
+	void accumulateActions(Actions & a, Subproject const & sp);
 
 	void accumulateNonactionable(Subprojects & sps, Subproject const & sp);
 

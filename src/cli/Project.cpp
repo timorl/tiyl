@@ -4,9 +4,9 @@
 
 #include"projects/Project.hpp"
 #include"projects/Mess.hpp"
-#include"projects/Todo.hpp"
+#include"projects/Action.hpp"
 #include"cli/Pretty.hpp"
-#include"cli/Todo.hpp"
+#include"cli/Action.hpp"
 #include"cli/Mess.hpp"
 
 namespace cli {
@@ -15,8 +15,8 @@ namespace cli {
 	using Subprojects = projects::Subprojects;
 	using Subproject = projects::Subproject;
 	using Mess = projects::Mess;
-	using Todo = projects::Todo;
-	using TodoList = projects::TodoList;
+	using Action = projects::Action;
+	using Actions = projects::Actions;
 
 	void printSubprojectShort(Subproject const & subproject) {
 		std::string toPrint = subproject.first;
@@ -41,11 +41,11 @@ namespace cli {
 		}
 	}
 
-	int projectShow(Context & c, std::vector<std::string> const &) {
+	int projectShow(Context & c, Arguments const &) {
 		Project const & project = c.getProject();
 		Subprojects const & subprojects = project.getSubprojects();
 		Mess const & mess = project.getMess();
-		TodoList const & todos = project.getTodos();
+		Actions const & actions = project.getActions();
 		std::cout << brightWhite("Project: ") << c.getCurrentName() << std::endl;
 		std::cout << brightWhite("Description: ") << project.getDescription() << std::endl;
 		if (project.isFrozen()) {
@@ -54,22 +54,22 @@ namespace cli {
 			std::cout << "This project is" << (project.isActionable()?"":red(" not")) << " actionable." << std::endl;
 		}
 		printMess(mess);
-		printTodoNames(todos);
+		printActionNames(actions);
 		printSubprojectNames(subprojects);
 		return 0;
 	}
 
-	int projectFreeze(Context & c, std::vector<std::string> const &) {
+	int projectFreeze(Context & c, Arguments const &) {
 		c.freeze();
 		return 0;
 	}
 
-	int projectThaw(Context & c, std::vector<std::string> const &) {
+	int projectThaw(Context & c, Arguments const &) {
 		c.thaw();
 		return 0;
 	}
 
-	int projectDelete(Context & c, std::vector<std::string> const & args) {
+	int projectDelete(Context & c, Arguments const & args) {
 		Project const & project = c.getProject();
 		Subprojects const & subprojects = project.getSubprojects();
 		if (subprojects.empty()) {
@@ -99,8 +99,8 @@ namespace cli {
 		return 0;
 	}
 
-	Subproject buildSubproject(std::vector<std::string> const & args) {
-		std::vector<std::string> newArgs;
+	Subproject buildSubproject(Arguments const & args) {
+		Arguments newArgs;
 		std::string name = splitSubcommand(args, newArgs, "");
 		if (name.empty()) {
 			std::cout << "Name: ";
@@ -116,7 +116,7 @@ namespace cli {
 		return Subproject(std::move(name), Project(description));
 	}
 
-	int projectCreate(Context & c, std::vector<std::string> const & args) {
+	int projectCreate(Context & c, Arguments const & args) {
 		if (!c.addSubproject(buildSubproject(args))) {
 			std::cout << "Subproject name conflict." << std::endl;
 			return 1;
@@ -124,8 +124,8 @@ namespace cli {
 		return 0;
 	}
 
-	int project(Context & c, std::vector<std::string> const & args) {
-		std::vector<std::string> newArgs;
+	int project(Context & c, Arguments const & args) {
+		Arguments newArgs;
 		std::string subcommand = splitSubcommand(args, newArgs, "show");
 		return singleCommand(projectCommands, c, subcommand, newArgs);
 	}

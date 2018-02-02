@@ -7,18 +7,18 @@
 #include"cli/Context.hpp"
 #include"cli/Movement.hpp"
 #include"cli/Mess.hpp"
-#include"cli/Todo.hpp"
+#include"cli/Action.hpp"
 #include"cli/Project.hpp"
 
 namespace cli {
 
-	int status(Context & c, std::vector<std::string> const &);
+	int status(Context & c, Arguments const &);
 
 	const std::map<std::string, Command> commands = {
 		{"status", status},
 		{"project", project},
 		{"mess", mess},
-		{"todo", todo},
+		{"action", action},
 		{"down", down},
 		{"up", up},
 		{"top", top},

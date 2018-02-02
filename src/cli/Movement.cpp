@@ -10,7 +10,7 @@ namespace cli {
 	using Subprojects = projects::Subprojects;
 	using Subproject = projects::Subproject;
 
-	int down(Context & c, std::vector<std::string> const & args) {
+	int down(Context & c, Arguments const & args) {
 		Project const & project = c.getProject();
 		Subprojects const & subprojects = project.getSubprojects();
 		if (subprojects.empty()) {
@@ -36,12 +36,12 @@ namespace cli {
 		return 1;
 	}
 
-	int up(Context & c, std::vector<std::string> const &) {
+	int up(Context & c, Arguments const &) {
 		c.moveUp();
 		return 0;
 	}
 
-	int top(Context & c, std::vector<std::string> const &) {
+	int top(Context & c, Arguments const &) {
 		c.moveTop();
 		return 0;
 	}

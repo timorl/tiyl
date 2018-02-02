@@ -1,20 +1,12 @@
 #include<iostream>
 #include<string>
-#include<map>
 #include<vector>
 #include<experimental/filesystem>
 
-#include"projects/Project.hpp"
-#include"projects/Todo.hpp"
-#include"projects/Mess.hpp"
 #include"database/Files.hpp"
 #include"cli/Context.hpp"
 #include"cli/Cli.hpp"
 
-using Project = projects::Project;
-using Subprojects = projects::Subprojects;
-using TodoList = projects::TodoList;
-using Mess = projects::Mess;
 using Context = cli::Context;
 
 const std::string MESS_FILE("mess");
@@ -46,7 +38,7 @@ int main(int argc, char * argv[]) {
 	database::clearMess(messFile);
 
 	if (argc > 1) {
-		std::vector<std::string> cmdArgs;
+		cli::Arguments cmdArgs;
 		for (int i = 2; i < argc; i++) {
 			cmdArgs.push_back(argv[i]);
 		}

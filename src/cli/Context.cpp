@@ -49,16 +49,16 @@ namespace cli {
 		pendingChanges = true;
 	}
 
-	bool Context::addTodo(Todo && t) {
-		if ( current->addTodo(std::move(t)) ) {
+	bool Context::addAction(Action && a) {
+		if ( current->addAction(std::move(a)) ) {
 			pendingChanges = true;
 			return true;
 		}
 		return false;
 	}
 
-	void Context::delTodo(std::string const & name) {
-		current->delTodo(name);
+	void Context::delAction(std::string const & name) {
+		current->delAction(name);
 		pendingChanges = true;
 	}
 

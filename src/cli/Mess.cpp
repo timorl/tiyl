@@ -5,14 +5,14 @@
 #include"projects/Mess.hpp"
 #include"cli/Pretty.hpp"
 #include"cli/Movement.hpp"
-#include"cli/Todo.hpp"
+#include"cli/Action.hpp"
 #include"cli/Project.hpp"
 
 namespace cli {
 
 	using Mess = projects::Mess;
 
-	int messAdd(Context & c, std::vector<std::string> const & args) {
+	int messAdd(Context & c, Arguments const & args) {
 		std::string name;
 		if ( !args.empty() ) {
 			name = args[0];
@@ -24,12 +24,12 @@ namespace cli {
 		return 0;
 	}
 
-	int deleteFix(Context & c, std::vector<std::string> const &, std::string const & messItem) {
+	int deleteFix(Context & c, Arguments const &, std::string const & messItem) {
 		c.delMess(messItem);
 		return 0;
 	}
 
-	int downFix(Context & c, std::vector<std::string> const & args, std::string const & messItem) {
+	int downFix(Context & c, Arguments const & args, std::string const & messItem) {
 		int downRes = down(c, args);
 		if (downRes != 0) {
 			return downRes;
@@ -40,16 +40,16 @@ namespace cli {
 		return 0;
 	}
 
-	int todoFix(Context & c, std::vector<std::string> const & args, std::string const & messItem) {
-		int todoRes = todoAdd(c, args);
-		if ( todoRes != 0 ) {
-			return todoRes;
+	int actionFix(Context & c, Arguments const & args, std::string const & messItem) {
+		int actionRes = actionAdd(c, args);
+		if ( actionRes != 0 ) {
+			return actionRes;
 		}
 		c.delMess(messItem);
 		return 0;
 	}
 
-	int subprojectFix(Context & c, std::vector<std::string> const & args, std::string const & messItem) {
+	int subprojectFix(Context & c, Arguments const & args, std::string const & messItem) {
 		int subprojectRes = projectCreate(c, args);
 		if ( subprojectRes != 0 ) {
 			return subprojectRes;
@@ -58,17 +58,17 @@ namespace cli {
 		return 0;
 	}
 
-	const std::vector<std::function<int(Context &, std::vector<std::string> const &, std::string const &)>> fixes = {
+	const std::vector<std::function<int(Context &, Arguments const &, std::string const &)>> fixes = {
 		deleteFix,
 		downFix,
-		todoFix,
+		actionFix,
 		subprojectFix,
 	};
 
-	int messFixer(Context & c, std::vector<std::string> const & args, std::string const & messItem) {
-		std::vector<std::string> newArgs;
+	int messFixer(Context & c, Arguments const & args, std::string const & messItem) {
+		Arguments newArgs;
 		std::string methodChoice = splitSubcommand(args, newArgs, "");
-		std::vector<std::string> options{"Delete", "Push down", "Convert to todo", "Convert to subproject"};
+		std::vector<std::string> options{"Delete", "Push down", "Convert to action", "Convert to subproject"};
 		int optionId;
 		if ( !methodChoice.empty() ) {
 			optionId = decodeChoice(options, "option", methodChoice);
@@ -81,7 +81,7 @@ namespace cli {
 		return fixes[optionId](c, newArgs, messItem);
 	}
 
-	int messFix(Context & c, std::vector<std::string> const & args) {
+	int messFix(Context & c, Arguments const & args) {
 		Mess const & mess = c.getProject().getMess();
 		if (mess.empty()) {
 			std::cout << "No mess." << std::endl;
@@ -91,7 +91,7 @@ namespace cli {
 		for (std::string const & m : mess) {
 			names.push_back(m);
 		}
-	 std::vector<std::string> newArgs;
+	 Arguments newArgs;
 		std::string messChoice = splitSubcommand(args, newArgs, "");
 		int messId;
 		if ( !messChoice.empty() ) {
@@ -118,14 +118,14 @@ namespace cli {
 		}
 	}
 
-	int messList(Context & c, std::vector<std::string> const &) {
+	int messList(Context & c, Arguments const &) {
 		Mess const & mess = c.getProject().getMess();
 		printMess(mess);
 		return 0;
 	}
 
-	int mess(Context & c, std::vector<std::string> const & args) {
-		std::vector<std::string> newArgs;
+	int mess(Context & c, Arguments const & args) {
+		Arguments newArgs;
 		std::string subcommand = splitSubcommand(args, newArgs, "list");
 		return singleCommand(messCommands, c, subcommand, newArgs);
 	}

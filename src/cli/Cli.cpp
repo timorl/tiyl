@@ -24,7 +24,7 @@ namespace cli {
 			if (name.length() == 0) {
 				continue;
 			}
-			std::vector<std::string> args;
+			Arguments args;
 			std::copy(std::istream_iterator<std::string>(inputStream), std::istream_iterator<std::string>(), std::back_inserter(args));
 			c.setLastResult(singleCommand(commands, c, name, args));
 			save(c);

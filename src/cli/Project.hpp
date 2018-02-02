@@ -8,17 +8,17 @@
 
 namespace cli {
 
-	int projectShow(Context & c, std::vector<std::string> const &);
+	int projectShow(Context & c, Arguments const &);
 
-	int projectFreeze(Context & c, std::vector<std::string> const &);
+	int projectFreeze(Context & c, Arguments const &);
 
-	int projectThaw(Context & c, std::vector<std::string> const &);
+	int projectThaw(Context & c, Arguments const &);
 
-	int projectDelete(Context & c, std::vector<std::string> const & args);
+	int projectDelete(Context & c, Arguments const & args);
 
-	int projectCreate(Context & c, std::vector<std::string> const & args);
+	int projectCreate(Context & c, Arguments const & args);
 
-	int project(Context & c, std::vector<std::string> const & args);
+	int project(Context & c, Arguments const & args);
 
 	const std::map<std::string, Command> projectCommands = {
 		{"show", projectShow},

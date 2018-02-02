@@ -10,13 +10,13 @@ namespace cli {
 
 	void printMess(Mess const & mess);
 
-	int messAdd(Context & c, std::vector<std::string> const & args);
+	int messAdd(Context & c, Arguments const & args);
 
-	int messFix(Context & c, std::vector<std::string> const & args);
+	int messFix(Context & c, Arguments const & args);
 
-	int messList(Context & c, std::vector<std::string> const &);
+	int messList(Context & c, Arguments const &);
 
-	int mess(Context & c, std::vector<std::string> const & args);
+	int mess(Context & c, Arguments const & args);
 
 	const std::map<std::string, Command> messCommands = {
 		{"list", messList},
