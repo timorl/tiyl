@@ -4,9 +4,11 @@
 
 #include"projects/Project.hpp"
 #include"projects/Mess.hpp"
+#include"projects/Habit.hpp"
 #include"projects/Action.hpp"
 #include"cli/Pretty.hpp"
 #include"cli/Action.hpp"
+#include"cli/Habit.hpp"
 #include"cli/Mess.hpp"
 
 namespace cli {
@@ -17,6 +19,7 @@ namespace cli {
 	using Mess = projects::Mess;
 	using Action = projects::Action;
 	using Actions = projects::Actions;
+	using Habits = projects::Habits;
 
 	void printSubprojectShort(Subproject const & subproject) {
 		std::string toPrint = subproject.first;
@@ -46,6 +49,7 @@ namespace cli {
 		Subprojects const & subprojects = project.getSubprojects();
 		Mess const & mess = project.getMess();
 		Actions const & actions = project.getActions();
+		Habits const & habits = project.getHabits();
 		std::cout << brightWhite("Project: ") << c.getCurrentName() << std::endl;
 		std::cout << brightWhite("Description: ") << project.getDescription() << std::endl;
 		if (project.isFrozen()) {
@@ -55,6 +59,7 @@ namespace cli {
 		}
 		printMess(mess);
 		printActionNames(actions);
+		printHabitNames(habits);
 		printSubprojectNames(subprojects);
 		return 0;
 	}
@@ -70,49 +75,29 @@ namespace cli {
 	}
 
 	int projectDelete(Context & c, Arguments const & args) {
-		Project const & project = c.getProject();
-		Subprojects const & subprojects = project.getSubprojects();
+		Subprojects const & subprojects = c.getProject().getSubprojects();
 		if (subprojects.empty()) {
 			std::cout << "No subprojects." << std::endl;
 			return 2;
 		}
-		std::vector<std::string> names;
-		for (Subproject const & subproject : subprojects) {
-			names.push_back(subproject.first);
-		}
-		int subprojectId;
-		if ( !args.empty() ) {
-			subprojectId = decodeChoice(names, "subproject", args[0]);
-		} else {
-			subprojectId = requestChoice(names, "subproject");
-		}
-		if ( subprojectId == -1 ) {
+		Arguments a = args;
+		std::string name = chooseFrom(subprojects, a, "subproject");
+		if (name.empty()) {
 			return 1;
 		}
-		std::string subprojectName = names[subprojectId];
-		if (!subprojects.at(subprojectName).empty()) {
+		if (!subprojects.at(name).empty()) {
 			if (!confirmation("The chosen subproject is not empty.")) {
 				return 3;
 			}
 		}
-		c.delSubproject(subprojectName);
+		c.delSubproject(name);
 		return 0;
 	}
 
 	Subproject buildSubproject(Arguments const & args) {
-		Arguments newArgs;
-		std::string name = splitSubcommand(args, newArgs, "");
-		if (name.empty()) {
-			std::cout << "Name: ";
-			std::getline(std::cin, name);
-		}
-		std::string description;
-		if (!newArgs.empty()) {
-			description = newArgs[0];
-		} else {
-			std::cout << "Description: ";
-			std::getline(std::cin, description);
-		}
+		Arguments a = args;
+		std::string name = requestString("Name", a);
+		std::string description = requestString("Description", a);
 		return Subproject(std::move(name), Project(description));
 	}
 

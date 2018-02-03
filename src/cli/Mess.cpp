@@ -87,23 +87,12 @@ namespace cli {
 			std::cout << "No mess." << std::endl;
 			return 2;
 		}
-		std::vector<std::string> names;
-		for (std::string const & m : mess) {
-			names.push_back(m);
-		}
-	 Arguments newArgs;
-		std::string messChoice = splitSubcommand(args, newArgs, "");
-		int messId;
-		if ( !messChoice.empty() ) {
-			messId = decodeChoice(names, "mess", messChoice);
-		} else {
-			messId = requestChoice(names, "mess");
-		}
-		if (messId == -1) {
+		Arguments a = args;
+		std::string name = chooseFromMess(mess, a, "mess");
+		if (name.empty()) {
 			return 1;
 		}
-		std::string messItem = names.at(messId);
-		return messFixer(c, newArgs, messItem);
+		return messFixer(c, args, name);
 	}
 
 	void printMess(Mess const & mess) {

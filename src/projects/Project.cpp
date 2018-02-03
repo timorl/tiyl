@@ -22,6 +22,18 @@ namespace projects {
 		actions.erase(name);
 	}
 
+	bool Project::addHabit(Habit && h) {
+		return habits.insert(std::move(h)).second;
+	}
+
+	void Project::doHabit(std::string const & name) {
+		habits[name].done();
+	}
+
+	void Project::delHabit(std::string const & name) {
+		habits.erase(name);
+	}
+
 	bool Project::addSubproject(Subproject && s) {
 		return subprojects.insert(std::move(s)).second;
 	}
@@ -61,6 +73,9 @@ namespace projects {
 		if (!p.getActions().empty()) {
 			j.emplace("actions", p.getActions());
 		}
+		if (!p.getHabits().empty()) {
+			j.emplace("habits", p.getHabits());
+		}
 		if (!p.getMess().empty()) {
 			j.emplace("mess", p.getMess());
 		}
@@ -76,6 +91,9 @@ namespace projects {
 		}
 		if (j.count("actions")) {
 			p.setActions(j.at("actions").get<Actions>());
+		}
+		if (j.count("habits")) {
+			p.setHabits(j.at("habits").get<Habits>());
 		}
 		if (j.count("mess")) {
 			p.setMess(j.at("mess").get<Mess>());
@@ -103,6 +121,12 @@ namespace projects {
 		Actions const & localActions = sp.second.getActions();
 		a.insert(localActions.begin(), localActions.end());
 		sp.second.accumulateFromSubprojects(a, accumulateActions);
+	}
+
+	void accumulateHabits(Habits & h, Subproject const & sp) {
+		Habits const & localHabits = sp.second.getHabits();
+		h.insert(localHabits.begin(), localHabits.end());
+		sp.second.accumulateFromSubprojects(h, accumulateHabits);
 	}
 
 	void accumulateNonactionable(Subprojects & sps, Subproject const & sp) {

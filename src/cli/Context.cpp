@@ -62,6 +62,24 @@ namespace cli {
 		pendingChanges = true;
 	}
 
+	bool Context::addHabit(Habit && h) {
+		if ( current->addHabit(std::move(h)) ) {
+			pendingChanges = true;
+			return true;
+		}
+		return false;
+	}
+
+	void Context::doHabit(std::string const & name) {
+		current->doHabit(name);
+		pendingChanges = true;
+	}
+
+	void Context::delHabit(std::string const & name) {
+		current->delHabit(name);
+		pendingChanges = true;
+	}
+
 	bool Context::addSubproject(Subproject && s) {
 		if ( current->addSubproject(std::move(s)) ) {
 			pendingChanges = true;

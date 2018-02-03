@@ -7,6 +7,7 @@
 #include"cli/Context.hpp"
 #include"cli/Movement.hpp"
 #include"cli/Mess.hpp"
+#include"cli/Habit.hpp"
 #include"cli/Action.hpp"
 #include"cli/Project.hpp"
 
@@ -19,6 +20,7 @@ namespace cli {
 		{"project", project},
 		{"mess", mess},
 		{"action", action},
+		{"habit", habit},
 		{"down", down},
 		{"up", up},
 		{"top", top},

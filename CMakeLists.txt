@@ -34,8 +34,10 @@ file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX})
 
 set(COMMON_HDRS
 	${PROJECT_SOURCE_DIR}/nlohmann/json.hpp
+	${PROJECT_SOURCE_DIR}/util/Dates.hpp
 	${PROJECT_SOURCE_DIR}/projects/Project.hpp
 	${PROJECT_SOURCE_DIR}/projects/Action.hpp
+	${PROJECT_SOURCE_DIR}/projects/Habit.hpp
 	${PROJECT_SOURCE_DIR}/projects/Mess.hpp
 	${PROJECT_SOURCE_DIR}/database/Files.hpp
 	${PROJECT_SOURCE_DIR}/cli/Pretty.hpp
@@ -43,6 +45,7 @@ set(COMMON_HDRS
 	${PROJECT_SOURCE_DIR}/cli/Context.hpp
 	${PROJECT_SOURCE_DIR}/cli/Movement.hpp
 	${PROJECT_SOURCE_DIR}/cli/Mess.hpp
+	${PROJECT_SOURCE_DIR}/cli/Habit.hpp
 	${PROJECT_SOURCE_DIR}/cli/Action.hpp
 	${PROJECT_SOURCE_DIR}/cli/Project.hpp
 	${PROJECT_SOURCE_DIR}/cli/Commands.hpp
@@ -50,8 +53,10 @@ set(COMMON_HDRS
 	)
 
 set(COMMON_SRCS
+	${PROJECT_SOURCE_DIR}/util/Dates.cpp
 	${PROJECT_SOURCE_DIR}/projects/Project.cpp
 	${PROJECT_SOURCE_DIR}/projects/Action.cpp
+	${PROJECT_SOURCE_DIR}/projects/Habit.cpp
 	${PROJECT_SOURCE_DIR}/projects/Mess.cpp
 	${PROJECT_SOURCE_DIR}/database/Files.cpp
 	${PROJECT_SOURCE_DIR}/cli/Pretty.cpp
@@ -59,6 +64,7 @@ set(COMMON_SRCS
 	${PROJECT_SOURCE_DIR}/cli/Context.cpp
 	${PROJECT_SOURCE_DIR}/cli/Movement.cpp
 	${PROJECT_SOURCE_DIR}/cli/Mess.cpp
+	${PROJECT_SOURCE_DIR}/cli/Habit.cpp
 	${PROJECT_SOURCE_DIR}/cli/Action.cpp
 	${PROJECT_SOURCE_DIR}/cli/Project.cpp
 	${PROJECT_SOURCE_DIR}/cli/Commands.cpp

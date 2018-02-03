@@ -81,4 +81,55 @@ namespace cli {
 		return false;
 	}
 
+	std::string requestString(std::string const & name, Arguments & args) {
+		Arguments newArgs;
+		std::string result = splitSubcommand(args, newArgs, "");
+		args = newArgs;
+		if ( result.empty() ) {
+			std::cout << name << ": ";
+			std::getline(std::cin, result);
+		}
+		return result;
+	}
+
+	int requestInt(std::string const & name, Arguments & args, int def) {
+		Arguments newArgs;
+		int result = -1;
+		std::string ans = splitSubcommand(args, newArgs, "");
+		args = newArgs;
+		if ( !ans.empty() ) {
+			result = decodeNumber(ans);
+		}
+		if ( result == -1 ) {
+			args = Arguments();
+			std::cout << name << " [" << def << "]: ";
+			std::getline(std::cin, ans);
+			result = decodeNumber(ans);
+		}
+		if (result == -1) {
+			result = def;
+		}
+		return result;
+	}
+
+	std::string chooseFromMess(Mess const & pool, Arguments & args, std::string const & what) {
+		std::vector<std::string> names;
+		for (std::string const & a : pool) {
+			names.push_back(a);
+		}
+		Arguments newArgs;
+		std::string ans = splitSubcommand(args, newArgs, "");
+		args = newArgs;
+		int id;
+		if ( !ans.empty() ) {
+			id = decodeChoice(names, what, ans);
+		} else {
+			id = requestChoice(names, what);
+		}
+		if (id == -1) {
+			return "";
+		}
+		return names.at(id);
+	}
+
 }

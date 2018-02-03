@@ -42,43 +42,19 @@ namespace cli {
 			std::cout << "No actions." << std::endl;
 			return 2;
 		}
-		std::vector<std::string> names;
-		for (Action const & a : actions) {
-			names.push_back(a.first);
-		}
-		int actionId;
-		if ( !args.empty() ) {
-			actionId = decodeChoice(names, "action", args[0]);
-		} else {
-			actionId = requestChoice(names, "action");
-		}
-		if (actionId == -1) {
+		Arguments a = args;
+		std::string name = chooseFrom(actions, a, "action");
+		if (name.empty()) {
 			return 1;
 		}
-		c.delAction(names.at(actionId));
+		c.delAction(name);
 		return 0;
 	}
 
 	Action buildAction(Arguments const & args) {
-		Arguments newArgs;
-		std::string name = splitSubcommand(args, newArgs, "");
-		if ( name.empty() ) {
-			std::cout << "Name: ";
-			std::getline(std::cin, name);
-		}
-		int duration = -1;
-		if ( !newArgs.empty() ) {
-			duration = decodeNumber(newArgs[0]);
-		}
-		if ( duration == -1 ) {
-			std::cout << "Duration (in minutes) [0]: ";
-			std::string ans;
-			std::getline(std::cin, ans);
-			duration = decodeNumber(ans);
-		}
-		if (duration == -1) {
-			duration = 0;
-		}
+		Arguments a = args;
+		std::string name = requestString("Name", a);
+		int duration = requestInt("Duration (in minutes)", a, 0);
 		return Action(std::move(name), ActionDetails(duration));
 	}
 
@@ -102,21 +78,9 @@ namespace cli {
 			std::cout << "No actions." << std::endl;
 			return 2;
 		}
-		std::vector<std::string> names;
-		for (Action const & a : actions) {
-			names.push_back(a.first);
-		}
-		int actionId;
-		if ( !args.empty() ) {
-			actionId = decodeChoice(names, "action", args[0]);
-		} else {
-			actionId = requestChoice(names, "action");
-		}
-		if (actionId == -1) {
-			return 1;
-		}
-		std::string actionName = names.at(actionId);
-		printAction(Action(actionName, actions.at(actionName)));
+		Arguments a = args;
+		std::string name = chooseFrom(actions, a, "action");
+		printAction(Action(name, actions.at(name)));
 		return 0;
 	}
 
