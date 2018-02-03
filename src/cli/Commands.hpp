@@ -10,6 +10,7 @@
 #include"cli/Habit.hpp"
 #include"cli/Action.hpp"
 #include"cli/Project.hpp"
+#include"cli/All.hpp"
 
 namespace cli {
 
@@ -21,6 +22,7 @@ namespace cli {
 		{"mess", mess},
 		{"action", action},
 		{"habit", habit},
+		{"all", all},
 		{"down", down},
 		{"up", up},
 		{"top", top},

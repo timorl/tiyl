@@ -48,6 +48,7 @@ set(COMMON_HDRS
 	${PROJECT_SOURCE_DIR}/cli/Habit.hpp
 	${PROJECT_SOURCE_DIR}/cli/Action.hpp
 	${PROJECT_SOURCE_DIR}/cli/Project.hpp
+	${PROJECT_SOURCE_DIR}/cli/All.hpp
 	${PROJECT_SOURCE_DIR}/cli/Commands.hpp
 	${PROJECT_SOURCE_DIR}/cli/Cli.hpp
 	)
@@ -67,6 +68,7 @@ set(COMMON_SRCS
 	${PROJECT_SOURCE_DIR}/cli/Habit.cpp
 	${PROJECT_SOURCE_DIR}/cli/Action.cpp
 	${PROJECT_SOURCE_DIR}/cli/Project.cpp
+	${PROJECT_SOURCE_DIR}/cli/All.cpp
 	${PROJECT_SOURCE_DIR}/cli/Commands.cpp
 	${PROJECT_SOURCE_DIR}/cli/Cli.cpp
 	)
