@@ -5,8 +5,13 @@
 
 #include"cli/Utils.hpp"
 #include"cli/Context.hpp"
+#include"cli/Habit.hpp"
 
 namespace cli {
+
+	void accumulateDueHabits(Habits & h, Subproject const & sp);
+
+	void accumulatePastHabits(Habits & h, Subproject const & sp);
 
 	int allHabit(Context & c, Arguments const & args);
 

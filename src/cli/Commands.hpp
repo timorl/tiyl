@@ -11,10 +11,9 @@
 #include"cli/Action.hpp"
 #include"cli/Project.hpp"
 #include"cli/All.hpp"
+#include"cli/Status.hpp"
 
 namespace cli {
-
-	int status(Context & c, Arguments const &);
 
 	const std::map<std::string, Command> commands = {
 		{"status", status},
