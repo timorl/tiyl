@@ -13,6 +13,8 @@ namespace util {
 
 	Date now();
 
+	Date maxDate();
+
 	int daysBetween(Date const & start, Date const & end);
 
 	int daysSince(Date const & t);

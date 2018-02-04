@@ -6,6 +6,7 @@
 #include"projects/Project.hpp"
 #include"projects/Action.hpp"
 #include"projects/Habit.hpp"
+#include"projects/Event.hpp"
 #include"projects/Mess.hpp"
 
 namespace cli {
@@ -14,6 +15,7 @@ namespace cli {
 	using Subproject = std::pair<std::string, Project>;
 	using Action = projects::Action;
 	using Habit = projects::Habit;
+	using Event = projects::Event;
 	using Mess = projects::Mess;
 
 	const std::string ROOT_NAME("Life");
@@ -57,6 +59,10 @@ namespace cli {
 			void doHabit(std::string const & name);
 
 			void delHabit(std::string const & name);
+
+			bool addEvent(Event && e);
+
+			void delEvent(std::string const & name);
 
 			bool addSubproject(Subproject && s);
 

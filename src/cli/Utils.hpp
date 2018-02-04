@@ -5,8 +5,11 @@
 #include<map>
 
 #include"cli/Context.hpp"
+#include"util/Dates.hpp"
 
 namespace cli {
+
+ using Date = util::Date;
 
 	using Arguments = std::vector<std::string>;
 	using Command = std::function<int(Context &, Arguments const &)>;
@@ -18,6 +21,8 @@ namespace cli {
 
 	int decodeNumber(std::string answer);
 
+	Date decodeDate(std::string answer);
+
 	int decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer);
 
 	int requestChoice(std::vector<std::string> const & from, std::string const & what);
@@ -27,6 +32,8 @@ namespace cli {
 	std::string requestString(std::string const & name, Arguments & args);
 
 	int requestInt(std::string const & name, Arguments & args, int def);
+
+	Date requestDate(std::string const & name, Arguments & args);
 
 	template<typename T>
 	std::string chooseFrom(std::map<std::string, T> const & pool, Arguments & args, std::string const & what) {

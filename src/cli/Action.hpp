@@ -28,6 +28,7 @@ namespace cli {
 		{"list", actionList},
 		{"show", actionShow},
 		{"add", actionAdd},
+		{"del", actionDone},
 		{"done", actionDone},
 	};
 

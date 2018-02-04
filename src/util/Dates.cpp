@@ -20,11 +20,18 @@ namespace util {
 		std::tm tm = {};
 		std::stringstream ss(s);
 		ss >> std::get_time(&tm, "%Y-%m-%d %H:%M");
+		if (ss.fail()) {
+			return maxDate();
+		}
 		return std::chrono::system_clock::from_time_t(std::mktime(&tm));
 	}
 
 	Date now() {
 		return std::chrono::system_clock::now();
+	}
+
+	Date maxDate() {
+		return std::chrono::time_point<std::chrono::system_clock>::max();
 	}
 
 	int daysBetween(Date const & start, Date const & end) {

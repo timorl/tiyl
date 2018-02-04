@@ -34,6 +34,14 @@ namespace projects {
 		habits.erase(name);
 	}
 
+	bool Project::addEvent(Event && e) {
+		return events.insert(std::move(e)).second;
+	}
+
+	void Project::delEvent(std::string const & name) {
+		events.erase(name);
+	}
+
 	bool Project::addSubproject(Subproject && s) {
 		return subprojects.insert(std::move(s)).second;
 	}
@@ -76,6 +84,9 @@ namespace projects {
 		if (!p.getHabits().empty()) {
 			j.emplace("habits", p.getHabits());
 		}
+		if (!p.getEvents().empty()) {
+			j.emplace("events", p.getEvents());
+		}
 		if (!p.getMess().empty()) {
 			j.emplace("mess", p.getMess());
 		}
@@ -94,6 +105,9 @@ namespace projects {
 		}
 		if (j.count("habits")) {
 			p.setHabits(j.at("habits").get<Habits>());
+		}
+		if (j.count("events")) {
+			p.setEvents(j.at("events").get<Events>());
 		}
 		if (j.count("mess")) {
 			p.setMess(j.at("mess").get<Mess>());
@@ -127,6 +141,12 @@ namespace projects {
 		Habits const & localHabits = sp.second.getHabits();
 		h.insert(localHabits.begin(), localHabits.end());
 		sp.second.accumulateFromSubprojects(h, accumulateHabits);
+	}
+
+	void accumulateEvents(Events & e, Subproject const & sp) {
+		Events const & localEvents = sp.second.getEvents();
+		e.insert(localEvents.begin(), localEvents.end());
+		sp.second.accumulateFromSubprojects(e, accumulateEvents);
 	}
 
 	void accumulateNonactionable(Subprojects & sps, Subproject const & sp) {

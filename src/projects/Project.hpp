@@ -9,6 +9,7 @@
 #include"projects/Mess.hpp"
 #include"projects/Action.hpp"
 #include"projects/Habit.hpp"
+#include"projects/Event.hpp"
 
 namespace projects {
 
@@ -33,6 +34,8 @@ namespace projects {
 
 			Habits const & getHabits() const { return habits; }
 
+			Events const & getEvents() const { return events; }
+
 			Mess const & getMess() const { return mess; }
 
 			bool isFrozen() const { return frozen; }
@@ -44,6 +47,8 @@ namespace projects {
 			void setActions(Actions const & a) { actions = a; }
 
 			void setHabits(Habits const & h) { habits = h; }
+
+			void setEvents(Events const & e) { events = e; }
 
 			void setMess(Mess const & m) { mess = m; }
 
@@ -65,6 +70,10 @@ namespace projects {
 			void doHabit(std::string const & name);
 
 			void delHabit(std::string const & name);
+
+			bool addEvent(Event && t);
+
+			void delEvent(std::string const & name);
 
 			bool addSubproject(Subproject && s);
 
@@ -89,6 +98,7 @@ namespace projects {
 			Subprojects subprojects;
 			Actions actions;
 			Habits habits;
+			Events events;
 			Mess mess;
 			bool frozen;
 	};
@@ -104,6 +114,8 @@ namespace projects {
 	void accumulateActions(Actions & a, Subproject const & sp);
 
 	void accumulateHabits(Habits & h, Subproject const & sp);
+
+	void accumulateEvents(Events & e, Subproject const & sp);
 
 	void accumulateNonactionable(Subprojects & sps, Subproject const & sp);
 

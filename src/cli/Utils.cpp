@@ -37,6 +37,10 @@ namespace cli {
 		return result;
 	}
 
+	Date decodeDate(std::string answer) {
+		return util::stringToDate(answer);
+	}
+
 	int decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer) {
 		int pid;
 		pid = decodeNumber(answer);
@@ -108,6 +112,23 @@ namespace cli {
 		}
 		if (result == -1) {
 			result = def;
+		}
+		return result;
+	}
+
+	Date requestDate(std::string const & name, Arguments & args) {
+		Arguments newArgs;
+		Date result = util::maxDate();
+		std::string ans = splitSubcommand(args, newArgs, "");
+		args = newArgs;
+		if ( !ans.empty() ) {
+			result = decodeDate(ans);
+		}
+		if ( result == util::maxDate() ) {
+			args = Arguments();
+			std::cout << name << ": ";
+			std::getline(std::cin, ans);
+			result = decodeDate(ans);
 		}
 		return result;
 	}

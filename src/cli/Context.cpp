@@ -80,6 +80,19 @@ namespace cli {
 		pendingChanges = true;
 	}
 
+	bool Context::addEvent(Event && e) {
+		if ( current->addEvent(std::move(e)) ) {
+			pendingChanges = true;
+			return true;
+		}
+		return false;
+	}
+
+	void Context::delEvent(std::string const & name) {
+		current->delEvent(name);
+		pendingChanges = true;
+	}
+
 	bool Context::addSubproject(Subproject && s) {
 		if ( current->addSubproject(std::move(s)) ) {
 			pendingChanges = true;

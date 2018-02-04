@@ -9,6 +9,7 @@
 #include"cli/Pretty.hpp"
 #include"cli/Action.hpp"
 #include"cli/Habit.hpp"
+#include"cli/Event.hpp"
 #include"cli/Mess.hpp"
 
 namespace cli {
@@ -20,6 +21,7 @@ namespace cli {
 	using Action = projects::Action;
 	using Actions = projects::Actions;
 	using Habits = projects::Habits;
+	using Events = projects::Events;
 
 	void printSubprojectShort(Subproject const & subproject) {
 		std::string toPrint = subproject.first;
@@ -50,6 +52,7 @@ namespace cli {
 		Mess const & mess = project.getMess();
 		Actions const & actions = project.getActions();
 		Habits const & habits = project.getHabits();
+		Events const & events = project.getEvents();
 		std::cout << brightWhite("Project: ") << c.getCurrentName() << std::endl;
 		std::cout << brightWhite("Description: ") << project.getDescription() << std::endl;
 		if (project.isFrozen()) {
@@ -60,6 +63,7 @@ namespace cli {
 		printMess(mess);
 		printActionNames(actions);
 		printHabitNames(habits);
+		printEventNames(events);
 		printSubprojectNames(subprojects);
 		return 0;
 	}

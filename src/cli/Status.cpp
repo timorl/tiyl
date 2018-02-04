@@ -15,6 +15,7 @@ namespace cli {
 	using Subproject = projects::Subproject;
 	using Actions = projects::Actions;
 	using Habits = projects::Habits;
+	using Events = projects::Events;
 	using Mess = projects::Mess;
 
 	int statusShort(Context & c, Arguments const &) {
@@ -34,6 +35,12 @@ namespace cli {
 		Habits pastHabits;
 		project.accumulateFromSubprojects(pastHabits, accumulatePastHabits);
 		int pastHabitsSize = pastHabits.size();
+		Events events;
+		project.accumulateFromSubprojects(events, projects::accumulateEvents);
+		int eventsSize = events.size();
+		Events soonEvents;
+		project.accumulateFromSubprojects(soonEvents, accumulateSoonEventsCreator(21));
+		int soonEventsSize = soonEvents.size();
 		if (messSize > 0) {
 			std::cout << "M:" << red(std::to_string(messSize)) << " ";
 		}
@@ -44,6 +51,11 @@ namespace cli {
 		std::cout << "H:" << dueHabitsSize;
 		if (pastHabitsSize > 0) {
 			std::cout << "(" << red(std::to_string(dueHabitsSize)) << ")";
+		}
+		std::cout << " ";
+		std::cout << "E:" << eventsSize;
+		if (soonEventsSize > 0) {
+			std::cout << "(" << red(std::to_string(soonEventsSize)) << ")";
 		}
 		std::cout << std::endl;
 		return 0;
@@ -69,12 +81,16 @@ namespace cli {
 		Habits pastHabits;
 		project.accumulateFromSubprojects(pastHabits, accumulatePastHabits);
 		int pastHabitsSize = pastHabits.size();
+		Events events;
+		project.accumulateFromSubprojects(events, projects::accumulateEvents);
+		int eventsSize = events.size();
 		std::cout << "You have a mess of size: " << messSize << std::endl;
 		std::cout << "You have " << allSize << " projects." << std::endl;
 		std::cout << "Among those " << nonactionableSize << " are nonactionable." << std::endl;
 		std::cout << "You can take " << actionsSize << " actions." << std::endl;
 		std::cout << "You have " << dueHabitsSize << " due habits." << std::endl;
 		std::cout << "Among those " << pastHabitsSize << " are past due." << std::endl;
+		std::cout << "You have " << eventsSize << " planned events." << std::endl;
 		return 0;
 	}
 
