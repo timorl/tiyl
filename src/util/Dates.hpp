@@ -11,6 +11,10 @@ namespace util {
 
 	Date stringToDate(std::string const & s);
 
+	std::string annualToString(Date const & t);
+
+	Date stringToAnnual(std::string const & s);
+
 	Date now();
 
 	Date maxDate();

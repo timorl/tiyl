@@ -23,6 +23,8 @@ namespace cli {
 
 	Date decodeDate(std::string answer);
 
+	Date decodeAnnual(std::string answer);
+
 	int decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer);
 
 	int requestChoice(std::vector<std::string> const & from, std::string const & what);
@@ -34,6 +36,8 @@ namespace cli {
 	int requestInt(std::string const & name, Arguments & args, int def);
 
 	Date requestDate(std::string const & name, Arguments & args);
+
+	Date requestAnnual(std::string const & name, Arguments & args);
 
 	template<typename T>
 	std::string chooseFrom(std::map<std::string, T> const & pool, Arguments & args, std::string const & what) {

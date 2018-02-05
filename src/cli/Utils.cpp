@@ -41,6 +41,10 @@ namespace cli {
 		return util::stringToDate(answer);
 	}
 
+	Date decodeAnnual(std::string answer) {
+		return util::stringToAnnual(answer);
+	}
+
 	int decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer) {
 		int pid;
 		pid = decodeNumber(answer);
@@ -129,6 +133,23 @@ namespace cli {
 			std::cout << name << ": ";
 			std::getline(std::cin, ans);
 			result = decodeDate(ans);
+		}
+		return result;
+	}
+
+	Date requestAnnual(std::string const & name, Arguments & args) {
+		Arguments newArgs;
+		Date result = util::maxDate();
+		std::string ans = splitSubcommand(args, newArgs, "");
+		args = newArgs;
+		if ( !ans.empty() ) {
+			result = decodeAnnual(ans);
+		}
+		if ( result == util::maxDate() ) {
+			args = Arguments();
+			std::cout << name << ": ";
+			std::getline(std::cin, ans);
+			result = decodeAnnual(ans);
 		}
 		return result;
 	}

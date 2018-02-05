@@ -8,8 +8,45 @@
 
 namespace cli {
 
+	std::function<void(Annuals &, Subproject const &)> accumulateSoonAnnualsCreator(int soon) {
+		std::function<void(Annuals &, Subproject const &)> accumulateSoonAnnuals =
+			[soon, &accumulateSoonAnnuals](Annuals & a, Subproject const & sp) {
+				Annuals const & localAnnuals = sp.second.getAnnuals();
+				for (Annual const & annual : localAnnuals) {
+					if (annual.second.daysLeft() < soon) {
+						a.insert(annual);
+					}
+				}
+				sp.second.accumulateFromSubprojects(a, accumulateSoonAnnuals);
+			};
+		return accumulateSoonAnnuals;
+	}
+
+	std::function<void(Annuals &, Subproject const &)> annualAccumulator(Arguments const & args) {
+		Arguments newArgs;
+		std::string condition = splitSubcommand(args, newArgs, "");
+		if (condition.empty()) {
+			return projects::accumulateAnnuals;
+		}
+		if (condition == "within") {
+			int days = requestInt("How many days", newArgs, 21);
+			return accumulateSoonAnnualsCreator(days);
+		}
+		if (condition == "soon") {
+			return accumulateSoonAnnualsCreator(21);
+		}
+		return projects::accumulateAnnuals;
+	}
+
+	int allAnnual(Context & c, Arguments const & args) {
+		Annuals annuals;
+		c.getProject().accumulateFromSubprojects(annuals, annualAccumulator(args));
+		printAnnualNames(annuals);
+		return 0;
+	}
+
 	std::function<void(Events &, Subproject const &)> accumulateSoonEventsCreator(int soon) {
-		std::function<void(Events &, Subproject const &)> accumulateSoonEvents = 
+		std::function<void(Events &, Subproject const &)> accumulateSoonEvents =
 			[soon, &accumulateSoonEvents](Events & e, Subproject const & sp) {
 				Events const & localEvents = sp.second.getEvents();
 				for (Event const & event : localEvents) {

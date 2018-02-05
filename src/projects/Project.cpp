@@ -42,6 +42,14 @@ namespace projects {
 		events.erase(name);
 	}
 
+	bool Project::addAnnual(Annual && a) {
+		return annuals.insert(std::move(a)).second;
+	}
+
+	void Project::delAnnual(std::string const & name) {
+		annuals.erase(name);
+	}
+
 	bool Project::addSubproject(Subproject && s) {
 		return subprojects.insert(std::move(s)).second;
 	}
@@ -56,7 +64,7 @@ namespace projects {
 
 
 	bool Project::isActionable() const {
-		if (!actions.empty()) {
+		if (!actions.empty() || !habits.empty() || !events.empty() || !annuals.empty()) {
 			return true;
 		}
 		bool result = false;
@@ -87,6 +95,9 @@ namespace projects {
 		if (!p.getEvents().empty()) {
 			j.emplace("events", p.getEvents());
 		}
+		if (!p.getAnnuals().empty()) {
+			j.emplace("annuals", p.getAnnuals());
+		}
 		if (!p.getMess().empty()) {
 			j.emplace("mess", p.getMess());
 		}
@@ -108,6 +119,9 @@ namespace projects {
 		}
 		if (j.count("events")) {
 			p.setEvents(j.at("events").get<Events>());
+		}
+		if (j.count("annuals")) {
+			p.setAnnuals(j.at("annuals").get<Annuals>());
 		}
 		if (j.count("mess")) {
 			p.setMess(j.at("mess").get<Mess>());
@@ -147,6 +161,12 @@ namespace projects {
 		Events const & localEvents = sp.second.getEvents();
 		e.insert(localEvents.begin(), localEvents.end());
 		sp.second.accumulateFromSubprojects(e, accumulateEvents);
+	}
+
+	void accumulateAnnuals(Annuals & a, Subproject const & sp) {
+		Annuals const & localAnnuals = sp.second.getAnnuals();
+		a.insert(localAnnuals.begin(), localAnnuals.end());
+		sp.second.accumulateFromSubprojects(a, accumulateAnnuals);
 	}
 
 	void accumulateNonactionable(Subprojects & sps, Subproject const & sp) {

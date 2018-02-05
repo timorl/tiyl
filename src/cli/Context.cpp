@@ -93,6 +93,19 @@ namespace cli {
 		pendingChanges = true;
 	}
 
+	bool Context::addAnnual(Annual && a) {
+		if ( current->addAnnual(std::move(a)) ) {
+			pendingChanges = true;
+			return true;
+		}
+		return false;
+	}
+
+	void Context::delAnnual(std::string const & name) {
+		current->delAnnual(name);
+		pendingChanges = true;
+	}
+
 	bool Context::addSubproject(Subproject && s) {
 		if ( current->addSubproject(std::move(s)) ) {
 			pendingChanges = true;

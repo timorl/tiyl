@@ -39,6 +39,7 @@ set(COMMON_HDRS
 	${PROJECT_SOURCE_DIR}/projects/Action.hpp
 	${PROJECT_SOURCE_DIR}/projects/Habit.hpp
 	${PROJECT_SOURCE_DIR}/projects/Event.hpp
+	${PROJECT_SOURCE_DIR}/projects/Annual.hpp
 	${PROJECT_SOURCE_DIR}/projects/Mess.hpp
 	${PROJECT_SOURCE_DIR}/database/Files.hpp
 	${PROJECT_SOURCE_DIR}/cli/Pretty.hpp
@@ -46,6 +47,7 @@ set(COMMON_HDRS
 	${PROJECT_SOURCE_DIR}/cli/Context.hpp
 	${PROJECT_SOURCE_DIR}/cli/Movement.hpp
 	${PROJECT_SOURCE_DIR}/cli/Mess.hpp
+	${PROJECT_SOURCE_DIR}/cli/Annual.hpp
 	${PROJECT_SOURCE_DIR}/cli/Event.hpp
 	${PROJECT_SOURCE_DIR}/cli/Habit.hpp
 	${PROJECT_SOURCE_DIR}/cli/Action.hpp
@@ -62,6 +64,7 @@ set(COMMON_SRCS
 	${PROJECT_SOURCE_DIR}/projects/Action.cpp
 	${PROJECT_SOURCE_DIR}/projects/Habit.cpp
 	${PROJECT_SOURCE_DIR}/projects/Event.cpp
+	${PROJECT_SOURCE_DIR}/projects/Annual.cpp
 	${PROJECT_SOURCE_DIR}/projects/Mess.cpp
 	${PROJECT_SOURCE_DIR}/database/Files.cpp
 	${PROJECT_SOURCE_DIR}/cli/Pretty.cpp
@@ -69,6 +72,7 @@ set(COMMON_SRCS
 	${PROJECT_SOURCE_DIR}/cli/Context.cpp
 	${PROJECT_SOURCE_DIR}/cli/Movement.cpp
 	${PROJECT_SOURCE_DIR}/cli/Mess.cpp
+	${PROJECT_SOURCE_DIR}/cli/Annual.cpp
 	${PROJECT_SOURCE_DIR}/cli/Event.cpp
 	${PROJECT_SOURCE_DIR}/cli/Habit.cpp
 	${PROJECT_SOURCE_DIR}/cli/Action.cpp

@@ -10,6 +10,7 @@
 #include"cli/Action.hpp"
 #include"cli/Habit.hpp"
 #include"cli/Event.hpp"
+#include"cli/Annual.hpp"
 #include"cli/Mess.hpp"
 
 namespace cli {
@@ -22,6 +23,7 @@ namespace cli {
 	using Actions = projects::Actions;
 	using Habits = projects::Habits;
 	using Events = projects::Events;
+	using Annuals = projects::Annuals;
 
 	void printSubprojectShort(Subproject const & subproject) {
 		std::string toPrint = subproject.first;
@@ -53,6 +55,7 @@ namespace cli {
 		Actions const & actions = project.getActions();
 		Habits const & habits = project.getHabits();
 		Events const & events = project.getEvents();
+		Annuals const & annuals = project.getAnnuals();
 		std::cout << brightWhite("Project: ") << c.getCurrentName() << std::endl;
 		std::cout << brightWhite("Description: ") << project.getDescription() << std::endl;
 		if (project.isFrozen()) {
@@ -64,6 +67,7 @@ namespace cli {
 		printActionNames(actions);
 		printHabitNames(habits);
 		printEventNames(events);
+		printAnnualNames(annuals);
 		printSubprojectNames(subprojects);
 		return 0;
 	}

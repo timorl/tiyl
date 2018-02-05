@@ -26,6 +26,34 @@ namespace util {
 		return std::chrono::system_clock::from_time_t(std::mktime(&tm));
 	}
 
+	std::string annualToString(Date const & t) {
+		std::time_t tt = std::chrono::system_clock::to_time_t(t);
+		std::stringstream ss;
+		ss << std::put_time(std::localtime(&tt), "%m-%d");
+		std::string s;
+		std::getline(ss, s);
+		return s;
+	}
+
+	Date stringToAnnual(std::string const & s) {
+		std::time_t  tt = std::chrono::system_clock::to_time_t(now());
+		std::tm tm = *std::localtime(&tt);
+		tm.tm_sec = 0;
+		tm.tm_min = 0;
+		tm.tm_hour = 0;
+		std::stringstream ss(s);
+		ss >> std::get_time(&tm, "%m-%d");
+		if (ss.fail()) {
+			return maxDate();
+		}
+		Date result = std::chrono::system_clock::from_time_t(std::mktime(&tm));
+	 while (daysSince(result) > 0) {
+			tm.tm_year = tm.tm_year + 1;
+			result = std::chrono::system_clock::from_time_t(std::mktime(&tm));
+		}
+		return result;
+	}
+
 	Date now() {
 		return std::chrono::system_clock::now();
 	}

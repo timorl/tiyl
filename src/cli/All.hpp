@@ -7,14 +7,19 @@
 #include"cli/Context.hpp"
 #include"cli/Habit.hpp"
 #include"cli/Event.hpp"
+#include"cli/Annual.hpp"
 
 namespace cli {
+
+	std::function<void(Annuals &, Subproject const &)> accumulateSoonAnnualsCreator(int soon);
 
 	std::function<void(Events &, Subproject const &)> accumulateSoonEventsCreator(int soon);
 
 	void accumulateDueHabits(Habits & h, Subproject const & sp);
 
 	void accumulatePastHabits(Habits & h, Subproject const & sp);
+
+	int allAnnual(Context & c, Arguments const & args);
 
 	int allEvent(Context & c, Arguments const & args);
 
@@ -31,6 +36,7 @@ namespace cli {
 		{"action", allAction},
 		{"habit", allHabit},
 		{"event", allEvent},
+		{"annual", allAnnual},
 	};
 
 }

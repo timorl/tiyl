@@ -7,6 +7,7 @@
 #include"projects/Action.hpp"
 #include"projects/Habit.hpp"
 #include"projects/Event.hpp"
+#include"projects/Annual.hpp"
 #include"projects/Mess.hpp"
 
 namespace cli {
@@ -16,6 +17,7 @@ namespace cli {
 	using Action = projects::Action;
 	using Habit = projects::Habit;
 	using Event = projects::Event;
+	using Annual = projects::Annual;
 	using Mess = projects::Mess;
 
 	const std::string ROOT_NAME("Life");
@@ -63,6 +65,10 @@ namespace cli {
 			bool addEvent(Event && e);
 
 			void delEvent(std::string const & name);
+
+			bool addAnnual(Annual && a);
+
+			void delAnnual(std::string const & name);
 
 			bool addSubproject(Subproject && s);
 
