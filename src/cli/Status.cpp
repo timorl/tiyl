@@ -40,7 +40,7 @@ namespace cli {
 		project.accumulateFromSubprojects(events, projects::accumulateEvents);
 		int eventsSize = events.size();
 		Events soonEvents;
-		project.accumulateFromSubprojects(soonEvents, accumulateSoonEventsCreator(21));
+		project.accumulateFromSubprojects(soonEvents, accumulateSoonEventsCreator(3));
 		int soonEventsSize = soonEvents.size();
 		Annuals soonAnnuals;
 		project.accumulateFromSubprojects(soonAnnuals, accumulateSoonAnnualsCreator(21));
