@@ -99,7 +99,9 @@ namespace projects {
 			template<typename T, typename Fun>
 			void accumulateFromSubprojects(T & result, Fun accumulator) const {
 				for (Subproject const & sp : getSubprojects()) {
-					accumulator(result, sp);
+					if (!sp.second.isFrozen()) {
+						accumulator(result, sp);
+					}
 				}
 			}
 		private:
