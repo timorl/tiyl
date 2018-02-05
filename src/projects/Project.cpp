@@ -170,7 +170,7 @@ namespace projects {
 	}
 
 	void accumulateNonactionable(Subprojects & sps, Subproject const & sp) {
-		if (sp.second.getActions().empty()) {
+		if (!sp.second.isActionable() && !sp.second.isFrozen()) {
 			sps.emplace(sp);
 		}
 		sp.second.accumulateFromSubprojects(sps, accumulateNonactionable);
