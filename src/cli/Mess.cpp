@@ -92,7 +92,7 @@ namespace cli {
 		if (name.empty()) {
 			return 1;
 		}
-		return messFixer(c, args, name);
+		return messFixer(c, a, name);
 	}
 
 	void printMess(Mess const & mess) {
