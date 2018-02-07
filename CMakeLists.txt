@@ -12,10 +12,6 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -g")
 set(CMAKE_CXX_FLAGS_RELEASE"${CMAKE_CXX_FLAGS} -O2")
 
-add_library(stdc++fs UNKNOWN IMPORTED)
-set_property(TARGET stdc++fs PROPERTY IMPORTED_LOCATION
-	"/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libstdc++fs.a")
-
 set(CMAKE_BUILD_TYPE "Debug")
 
 set(CMAKE_DEBUG_POSTFIX "_d")
