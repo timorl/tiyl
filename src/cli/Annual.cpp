@@ -12,6 +12,13 @@ namespace cli {
 		std::cout << "Name: " << a.first << std::endl;
 		AnnualDetails const & details = a.second;
 		std::cout << "Closest occurence: " << util::dateToString(details.getWhen()) << std::endl;
+		std::set<std::string> const & dependencies = details.getDependencies();
+		if (!dependencies.empty()) {
+			std::cout << "Depends on: " << std::endl;
+			for (std::string const & dep : dependencies) {
+				std::cout << " " << dep << std::endl;
+			}
+		}
 	}
 
 	void printAnnualShort(Annual const & a) {
@@ -19,8 +26,11 @@ namespace cli {
 		AnnualDetails const & annual = a.second;
 		int daysLeft = annual.daysLeft();
 		std::string dateToPrint = util::dateToString(annual.getWhen());
-		if (daysLeft < 21) {
+		if (daysLeft < 3) {
 			dateToPrint = red(dateToPrint);
+		}
+		if (!a.second.getDependencies().empty()) {
+			name = red(name);
 		}
 		std::cout << name << "(" << dateToPrint << ")" << std::endl;
 	}

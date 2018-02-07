@@ -14,10 +14,21 @@ namespace cli {
 		if (details.getDuration() != 0) {
 			std::cout << "Expected duration: " << details.getDuration() << " minutes." << std::endl;
 		}
+		std::set<std::string> const & dependencies = details.getDependencies();
+		if (!dependencies.empty()) {
+			std::cout << "Depends on: " << std::endl;
+			for (std::string const & dep : dependencies) {
+				std::cout << " " << dep << std::endl;
+			}
+		}
 	}
 
 	void printActionShort(Action const & a) {
-		std::cout << a.first;
+		std::string toPrint = a.first;
+		if (!a.second.getDependencies().empty()) {
+			toPrint = lessVisible(toPrint);
+		}
+		std::cout << toPrint;
 		if (a.second.getDuration() != 0) {
 			std::cout << " (" << a.second.getDuration() << "m)";
 		}

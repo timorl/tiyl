@@ -60,7 +60,7 @@ namespace cli {
 		return names.at(id);
 	}
 
-	std::string chooseFromMess(Mess const & pool, Arguments & args, std::string const & what);
+	std::string chooseFromSet(std::set<std::string> const & pool, Arguments & args, std::string const & what);
 
 }
 #endif

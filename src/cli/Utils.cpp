@@ -154,7 +154,7 @@ namespace cli {
 		return result;
 	}
 
-	std::string chooseFromMess(Mess const & pool, Arguments & args, std::string const & what) {
+	std::string chooseFromSet(std::set<std::string> const & pool, Arguments & args, std::string const & what) {
 		std::vector<std::string> names;
 		for (std::string const & a : pool) {
 			names.push_back(a);

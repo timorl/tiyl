@@ -102,7 +102,7 @@ namespace cli {
 		sp.second.accumulateFromSubprojects(h, accumulateDueHabits);
 	}
 
- std::map<std::string, std::function<void(Habits &, Subproject const &)>> habitAccumulator = {
+	std::map<std::string, std::function<void(Habits &, Subproject const &)>> habitAccumulator = {
 		{"", projects::accumulateHabits},
 		{"due", accumulateDueHabits},
 		{"past", accumulatePastHabits},
@@ -117,9 +117,26 @@ namespace cli {
 		return 0;
 	}
 
-	int allAction(Context & c, Arguments const &) {
+	void accumulateDoableActions(Actions & a, Subproject const & sp) {
+		Actions const & localActions = sp.second.getActions();
+		for (Action const & action : localActions) {
+			if (action.second.getDependencies().empty()) {
+				a.insert(action);
+			}
+		}
+		sp.second.accumulateFromSubprojects(a, accumulateDoableActions);
+	}
+
+	std::map<std::string, std::function<void(Actions &, Subproject const &)>> actionAccumulator = {
+		{"", projects::accumulateActions},
+		{"doable", accumulateDoableActions},
+	};
+
+	int allAction(Context & c, Arguments const & args) {
 		Actions actions;
-		c.getProject().accumulateFromSubprojects(actions, projects::accumulateActions);
+		Arguments newArgs;
+		std::string condition = splitSubcommand(args, newArgs, "");
+		c.getProject().accumulateFromSubprojects(actions, actionAccumulator[condition]);
 		printActionNames(actions);
 		return 0;
 	}

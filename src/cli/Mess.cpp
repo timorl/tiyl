@@ -88,7 +88,7 @@ namespace cli {
 			return 2;
 		}
 		Arguments a = args;
-		std::string name = chooseFromMess(mess, a, "mess");
+		std::string name = chooseFromSet(mess, a, "mess");
 		if (name.empty()) {
 			return 1;
 		}

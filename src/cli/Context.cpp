@@ -59,6 +59,7 @@ namespace cli {
 
 	void Context::delAction(std::string const & name) {
 		current->delAction(name);
+		current->updateDependencies();
 		pendingChanges = true;
 	}
 
@@ -90,6 +91,7 @@ namespace cli {
 
 	void Context::delEvent(std::string const & name) {
 		current->delEvent(name);
+		current->updateDependencies();
 		pendingChanges = true;
 	}
 
@@ -116,7 +118,16 @@ namespace cli {
 
 	void Context::delSubproject(std::string const & name) {
 		current->delSubproject(name);
+		current->updateDependencies();
 		pendingChanges = true;
+	}
+
+	bool Context::addDependency(std::string what, std::string onWhat) {
+		if ( current->addDependency(what, onWhat) ) {
+			pendingChanges = true;
+			return true;
+		}
+		return false;
 	}
 
 	void Context::freeze() {

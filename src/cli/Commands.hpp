@@ -12,6 +12,7 @@
 #include"cli/Habit.hpp"
 #include"cli/Action.hpp"
 #include"cli/Project.hpp"
+#include"cli/Dep.hpp"
 #include"cli/All.hpp"
 #include"cli/Status.hpp"
 
@@ -25,6 +26,7 @@ namespace cli {
 		{"habit", habit},
 		{"event", event},
 		{"annual", annual},
+		{"dep", dep},
 		{"all", all},
 		{"down", down},
 		{"up", up},

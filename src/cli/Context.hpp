@@ -74,6 +74,8 @@ namespace cli {
 
 			void delSubproject(std::string const & name);
 
+			bool addDependency(std::string what, std::string onWhat);
+
 			void freeze();
 
 			void thaw();

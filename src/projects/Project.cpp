@@ -58,10 +58,71 @@ namespace projects {
 		subprojects.erase(name);
 	}
 
+	bool Project::addDependency(std::string what, std::string onWhat) {
+		std::set<std::string> possibleDependencies = getPossibleDependencies();
+		if (!possibleDependencies.count(onWhat)) {
+			return false;
+		}
+		if (actions.count(what)) {
+			actions[what].addDependency(onWhat);
+			return true;
+		}
+		if (events.count(what)) {
+			events[what].addDependency(onWhat);
+			return true;
+		}
+		if (annuals.count(what)) {
+			annuals[what].addDependency(onWhat);
+			return true;
+		}
+		return false;
+	}
+
+	void Project::updateDependencies() {
+		std::set<std::string> possibleDependencies = getPossibleDependencies();
+		for (auto & a : actions) {
+			a.second.updateDependencies(possibleDependencies);
+		}
+		for (auto & e : events) {
+			e.second.updateDependencies(possibleDependencies);
+		}
+		for (auto & a : annuals) {
+			a.second.updateDependencies(possibleDependencies);
+		}
+	}
+
 	Project & Project::getSubproject(std::string name) {
 		return subprojects[name];
 	}
 
+
+	std::set<std::string> Project::getPossibleDependents() const {
+		std::set<std::string> result;
+		for (Action const & a : actions) {
+			result.insert(a.first);
+		}
+		for (Event const & e : events) {
+			result.insert(e.first);
+		}
+		for (Annual const & a : annuals) {
+			result.insert(a.first);
+		}
+		return result;
+	}
+
+	std::set<std::string> Project::getPossibleDependencies() const {
+		std::set<std::string> result;
+		for (Action const & a : actions) {
+			result.insert(a.first);
+		}
+		for (Event const & e : events) {
+			result.insert(e.first);
+		}
+		for (Subproject const & s : subprojects) {
+			result.insert(s.first);
+		}
+		return result;
+	}
 
 	bool Project::isActionable() const {
 		if (!actions.empty() || !habits.empty() || !events.empty() || !annuals.empty()) {

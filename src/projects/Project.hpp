@@ -3,6 +3,7 @@
 #include<string>
 #include<map>
 #include<vector>
+#include<set>
 
 #include"nlohmann/json.hpp"
 
@@ -88,8 +89,16 @@ namespace projects {
 
 			void delSubproject(std::string const & name);
 
+			bool addDependency(std::string what, std::string onWhat);
+
+			void updateDependencies();
+
 			Project & getSubproject(std::string name);
 
+
+			std::set<std::string> getPossibleDependents() const;
+
+			std::set<std::string> getPossibleDependencies() const;
 
 			bool isActionable() const;
 

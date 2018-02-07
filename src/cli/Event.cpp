@@ -12,6 +12,13 @@ namespace cli {
 		std::cout << "Name: " << e.first << std::endl;
 		EventDetails const & details = e.second;
 		std::cout << "When: " << util::dateToString(details.getWhen()) << std::endl;
+		std::set<std::string> const & dependencies = details.getDependencies();
+		if (!dependencies.empty()) {
+			std::cout << "Depends on: " << std::endl;
+			for (std::string const & dep : dependencies) {
+				std::cout << " " << dep << std::endl;
+			}
+		}
 	}
 
 	void printEventShort(Event const & e) {
@@ -21,6 +28,9 @@ namespace cli {
 		std::string dateToPrint = util::dateToString(event.getWhen());
 		if (daysLeft < 3) {
 			dateToPrint = red(dateToPrint);
+		}
+		if (!e.second.getDependencies().empty()) {
+			name = red(name);
 		}
 		std::cout << name << "(" << dateToPrint << ")" << std::endl;
 	}
