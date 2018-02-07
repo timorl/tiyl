@@ -8,17 +8,6 @@ namespace database {
 
 	using json = nlohmann::json;
 
-	Mess readMess(path const & p) {
-		Mess m;
-		std::ifstream stream(p);
-		stream >> m;
-		return m;
-	}
-
-	void clearMess(path const & p) {
-		std::ofstream stream(p, std::ofstream::trunc);
-	}
-
 	Project readProject(path const & p) {
 		std::ifstream stream(p);
 		json j;

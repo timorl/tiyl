@@ -9,7 +9,6 @@
 
 using Context = cli::Context;
 
-const std::string MESS_FILE("mess");
 const std::string PROJECTS_FILE("Projects.json");
 
 // Refactor asap unless you drop this project.
@@ -17,9 +16,6 @@ const std::string HARDCODED_DIR("/home/timorl/stuff");
 
 int main(int argc, char * argv[]) {
 	std::experimental::filesystem::path dataDir = HARDCODED_DIR;
-
-	std::experimental::filesystem::path messFile = dataDir;
-	messFile /= MESS_FILE;
 
 	std::experimental::filesystem::path projectsFile = dataDir;
 	projectsFile /= PROJECTS_FILE;
@@ -32,10 +28,6 @@ int main(int argc, char * argv[]) {
 			context.resetModified();
 		}
 	};
-
-	context.addMess(database::readMess(messFile));
-	save(context);
-	database::clearMess(messFile);
 
 	if (argc > 1) {
 		cli::Arguments cmdArgs;

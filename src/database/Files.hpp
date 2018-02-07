@@ -12,10 +12,6 @@ namespace database {
 	using Mess = projects::Mess;
 	using Project = projects::Project;
 
-	Mess readMess(path const & p);
-
-	void clearMess(path const & p);
-
 	Project readProject(path const & p);
 
 	void writeProject(path const & p, Project const & project);
