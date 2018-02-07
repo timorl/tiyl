@@ -54,7 +54,7 @@ namespace cli {
 		std::cout << "A:" << actionsSize << " ";
 		std::cout << "H:" << dueHabitsSize;
 		if (pastHabitsSize > 0) {
-			std::cout << "(" << red(std::to_string(dueHabitsSize)) << ")";
+			std::cout << "(" << red(std::to_string(pastHabitsSize)) << ")";
 		}
 		std::cout << " ";
 		if (soonAnnualsSize > 0) {

@@ -99,7 +99,7 @@ namespace cli {
 				h.insert(habit);
 			}
 		}
-		sp.second.accumulateFromSubprojects(h, accumulateDueHabits);
+		sp.second.accumulateFromSubprojects(h, accumulatePastHabits);
 	}
 
 	std::map<std::string, std::function<void(Habits &, Subproject const &)>> habitAccumulator = {
