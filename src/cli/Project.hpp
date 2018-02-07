@@ -24,8 +24,8 @@ namespace cli {
 		{"show", projectShow},
 		{"freeze", projectFreeze},
 		{"thaw", projectThaw},
-		{"delete", projectDelete},
-		{"create", projectCreate},
+		{"del", projectDelete},
+		{"add", projectCreate},
 	};
 
 }
