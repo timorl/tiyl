@@ -4,21 +4,29 @@
 #include<experimental/filesystem>
 
 #include"database/Files.hpp"
+#include"util/Config.hpp"
 #include"cli/Context.hpp"
 #include"cli/Cli.hpp"
 
+using Config = util::Config;
 using Context = cli::Context;
+using Project = projects::Project;
 
-const std::string PROJECTS_FILE("Projects.json");
-
-// Refactor asap unless you drop this project.
-const std::string HARDCODED_DIR("/home/timorl/stuff");
+const std::string configFileSansHome(".config/tiyl/config.json");
 
 int main(int argc, char * argv[]) {
-	std::experimental::filesystem::path dataDir = HARDCODED_DIR;
+	Config cfg;
+	std::experimental::filesystem::path configFile(std::getenv("HOME"));
+	configFile /= configFileSansHome;
+	cfg.loadFromFile(configFile);
 
-	std::experimental::filesystem::path projectsFile = dataDir;
-	projectsFile /= PROJECTS_FILE;
+	std::experimental::filesystem::path projectsFile = cfg.getProjectsFile();
+	if (!std::experimental::filesystem::exists(projectsFile)) {
+		Project defaultLife;
+		defaultLife.setDescription("This is your life.");
+		std::experimental::filesystem::create_directories(projectsFile.parent_path());
+		database::writeProject(projectsFile, defaultLife);
+	}
 
 	Context context(database::readProject(projectsFile));
 

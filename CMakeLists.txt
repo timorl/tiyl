@@ -35,6 +35,7 @@ file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX})
 set(COMMON_HDRS
 	${PROJECT_SOURCE_DIR}/nlohmann/json.hpp
 	${PROJECT_SOURCE_DIR}/util/Dates.hpp
+	${PROJECT_SOURCE_DIR}/util/Config.hpp
 	${PROJECT_SOURCE_DIR}/projects/Project.hpp
 	${PROJECT_SOURCE_DIR}/projects/Action.hpp
 	${PROJECT_SOURCE_DIR}/projects/Habit.hpp
@@ -61,6 +62,7 @@ set(COMMON_HDRS
 
 set(COMMON_SRCS
 	${PROJECT_SOURCE_DIR}/util/Dates.cpp
+	${PROJECT_SOURCE_DIR}/util/Config.cpp
 	${PROJECT_SOURCE_DIR}/projects/Project.cpp
 	${PROJECT_SOURCE_DIR}/projects/Action.cpp
 	${PROJECT_SOURCE_DIR}/projects/Habit.cpp
