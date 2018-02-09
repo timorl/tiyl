@@ -58,7 +58,7 @@ namespace cli {
 		}
 		std::cout << " ";
 		if (soonAnnualsSize > 0) {
-			std::cout << "AI:" << red(std::to_string(soonAnnualsSize)) << " ";
+			std::cout << "AI:" << std::to_string(soonAnnualsSize) << " ";
 		}
 		std::cout << "E:" << eventsSize;
 		if (soonEventsSize > 0) {
