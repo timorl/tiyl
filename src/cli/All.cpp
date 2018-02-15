@@ -102,17 +102,24 @@ namespace cli {
 		sp.second.accumulateFromSubprojects(h, accumulatePastHabits);
 	}
 
-	std::map<std::string, std::function<void(Habits &, Subproject const &)>> habitAccumulator = {
-		{"", projects::accumulateHabits},
-		{"due", accumulateDueHabits},
-		{"past", accumulatePastHabits},
-	};
+	std::function<void(Habits &, Subproject const &)> habitAccumulator(Arguments const & args) {
+		Arguments newArgs;
+		std::string condition = splitSubcommand(args, newArgs, "");
+		if (condition.empty()) {
+			return projects::accumulateHabits;
+		}
+		if (condition == "due") {
+			return accumulateDueHabits;
+		}
+		if (condition == "past") {
+			return accumulatePastHabits;
+		}
+		return projects::accumulateHabits;
+	}
 
 	int allHabit(Context & c, Arguments const & args) {
 		Habits habits;
-		Arguments newArgs;
-		std::string condition = splitSubcommand(args, newArgs, "");
-		c.getProject().accumulateFromSubprojects(habits, habitAccumulator[condition]);
+		c.getProject().accumulateFromSubprojects(habits, habitAccumulator(args));
 		printHabitNames(habits);
 		return 0;
 	}
