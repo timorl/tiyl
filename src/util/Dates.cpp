@@ -20,6 +20,7 @@ namespace util {
 		std::tm tm = {};
 		std::stringstream ss(s);
 		ss >> std::get_time(&tm, "%Y-%m-%d %H:%M");
+		tm.tm_isdst = -1;
 		if (ss.fail()) {
 			return maxDate();
 		}

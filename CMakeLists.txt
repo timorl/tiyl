@@ -92,3 +92,14 @@ link_libraries(${LIBS} ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable(tiyl ${COMMON_HDRS} ${COMMON_SRCS} ${PROJECT_SOURCE_DIR}/tiyl.cpp)
 target_link_libraries(${PROJECT_NAME} stdc++fs)
+
+#Catch for tests
+set(CATCH_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/catch)
+add_library(Catch INTERFACE)
+target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
+
+set(TEST_SOURCES
+	${PROJECT_SOURCE_DIR}/util/tests/Dates.cpp
+	)
+add_executable(tests ${COMMON_HDRS} ${COMMON_SRCS} ${TEST_SOURCES} ${PROJECT_SOURCE_DIR}/tests.cpp)
+target_link_libraries(tests Catch stdc++fs)
