@@ -7,6 +7,7 @@
 #include"projects/Habit.hpp"
 #include"projects/Action.hpp"
 #include"cli/Pretty.hpp"
+#include"cli/Utils.hpp"
 #include"cli/Action.hpp"
 #include"cli/Habit.hpp"
 #include"cli/Event.hpp"

@@ -1,10 +1,9 @@
 #ifndef TIYL_CLI_COMMANDS_HPP
 #define TIYL_CLI_COMMANDS_HPP
-#include<string>
-#include<map>
 
 #include"cli/Utils.hpp"
 #include"cli/Context.hpp"
+#include"cli/Completions.hpp"
 #include"cli/Movement.hpp"
 #include"cli/Mess.hpp"
 #include"cli/Annual.hpp"
@@ -18,19 +17,19 @@
 
 namespace cli {
 
-	const std::map<std::string, Command> commands = {
-		{"status", status},
-		{"project", project},
-		{"mess", mess},
-		{"action", action},
-		{"habit", habit},
-		{"event", event},
-		{"annual", annual},
-		{"dep", dep},
-		{"all", all},
-		{"down", down},
-		{"up", up},
-		{"top", top},
+	const Commands commands = {
+		{"status", Command(status, noCompletions)},
+		{"project", Command(project, noCompletions)},
+		{"mess", Command(mess, noCompletions)},
+		{"action", Command(action, noCompletions)},
+		{"habit", Command(habit, noCompletions)},
+		{"event", Command(event, noCompletions)},
+		{"annual", Command(annual, noCompletions)},
+		{"dep", Command(dep, noCompletions)},
+		{"all", Command(all, noCompletions)},
+		{"down", Command(down, noCompletions)},
+		{"up", Command(up, noCompletions)},
+		{"top", Command(top, noCompletions)},
 	};
 
 }

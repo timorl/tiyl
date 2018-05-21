@@ -4,6 +4,7 @@
 
 #include"projects/Mess.hpp"
 #include"cli/Pretty.hpp"
+#include"cli/Utils.hpp"
 #include"cli/Movement.hpp"
 #include"cli/Action.hpp"
 #include"cli/Project.hpp"

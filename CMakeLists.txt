@@ -52,7 +52,9 @@ set(COMMON_HDRS
 	${PROJECT_SOURCE_DIR}/cli/Dep.hpp
 	${PROJECT_SOURCE_DIR}/cli/All.hpp
 	${PROJECT_SOURCE_DIR}/cli/Status.hpp
+	${PROJECT_SOURCE_DIR}/cli/Command.hpp
 	${PROJECT_SOURCE_DIR}/cli/Commands.hpp
+	${PROJECT_SOURCE_DIR}/cli/Completions.hpp
 	${PROJECT_SOURCE_DIR}/cli/Cli.hpp
 	)
 
@@ -79,6 +81,7 @@ set(COMMON_SRCS
 	${PROJECT_SOURCE_DIR}/cli/Dep.cpp
 	${PROJECT_SOURCE_DIR}/cli/All.cpp
 	${PROJECT_SOURCE_DIR}/cli/Status.cpp
+	${PROJECT_SOURCE_DIR}/cli/Completions.cpp
 	${PROJECT_SOURCE_DIR}/cli/Cli.cpp
 	)
 
@@ -86,12 +89,11 @@ include_directories(
 	${PROJECT_SOURCE_DIR}
 	)
 
-set(LIBS ${LIBS})
-
-link_libraries(${LIBS} ${CMAKE_THREAD_LIBS_INIT})
-
+add_library(linenoise
+	${PROJECT_SOURCE_DIR}/linenoise/linenoise.h
+	${PROJECT_SOURCE_DIR}/linenoise/linenoise.c)
 add_executable(tiyl ${COMMON_HDRS} ${COMMON_SRCS} ${PROJECT_SOURCE_DIR}/tiyl.cpp)
-target_link_libraries(${PROJECT_NAME} stdc++fs)
+target_link_libraries(${PROJECT_NAME} linenoise stdc++fs)
 
 #Catch for tests
 set(CATCH_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/catch)
@@ -102,4 +104,4 @@ set(TEST_SOURCES
 	${PROJECT_SOURCE_DIR}/util/tests/Dates.cpp
 	)
 add_executable(tests ${COMMON_HDRS} ${COMMON_SRCS} ${TEST_SOURCES} ${PROJECT_SOURCE_DIR}/tests.cpp)
-target_link_libraries(tests Catch stdc++fs)
+target_link_libraries(tests Catch linenoise stdc++fs)

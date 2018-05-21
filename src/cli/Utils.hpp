@@ -5,15 +5,12 @@
 #include<map>
 
 #include"cli/Context.hpp"
+#include"cli/Command.hpp"
 #include"util/Dates.hpp"
 
 namespace cli {
 
  using Date = util::Date;
-
-	using Arguments = std::vector<std::string>;
-	using Command = std::function<int(Context &, Arguments const &)>;
- using Commands = std::map<std::string, Command>;
 
 	int singleCommand(Commands const & commands, Context & c, std::string const & name, Arguments const & args);
 

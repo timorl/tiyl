@@ -1,10 +1,7 @@
 #ifndef TIYL_CLI_STATUS_HPP
 #define TIYL_CLI_STATUS_HPP
-#include<string>
-#include<map>
 
-#include"cli/Utils.hpp"
-#include"cli/Context.hpp"
+#include"cli/Command.hpp"
 
 namespace cli {
 
@@ -14,9 +11,9 @@ namespace cli {
 
 	int status(Context & c, Arguments const & args);
 
-	const std::map<std::string, Command> statusCommands = {
-		{"short", statusShort},
-		{"long", statusLong},
+	const Commands statusCommands = {
+		{"short", Command(statusShort, noCompletions)},
+		{"long", Command(statusLong, noCompletions)},
 	};
 
 }

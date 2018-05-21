@@ -1,10 +1,8 @@
 #ifndef TIYL_CLI_EVENT_HPP
 #define TIYL_CLI_EVENT_HPP
-#include<string>
-#include<map>
 
-#include"cli/Utils.hpp"
-#include"cli/Context.hpp"
+#include"cli/Command.hpp"
+#include"cli/Completions.hpp"
 #include"projects/Event.hpp"
 
 namespace cli {
@@ -24,12 +22,12 @@ namespace cli {
 
 	int event(Context & c, Arguments const & args);
 
-	const std::map<std::string, Command> eventCommands = {
-		{"list", eventList},
-		{"show", eventShow},
-		{"add", eventAdd},
-		{"del", eventDel},
-		{"done", eventDel},
+	const Commands eventCommands = {
+		{"list", Command(eventList, noCompletions)},
+		{"show", Command(eventShow, noCompletions)},
+		{"add", Command(eventAdd, noCompletions)},
+		{"del", Command(eventDel, noCompletions)},
+		{"done", Command(eventDel, noCompletions)},
 	};
 
 }

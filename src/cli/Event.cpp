@@ -3,6 +3,7 @@
 #include<iostream>
 
 #include"cli/Pretty.hpp"
+#include"cli/Utils.hpp"
 
 namespace cli {
 

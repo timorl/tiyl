@@ -1,10 +1,8 @@
 #ifndef TIYL_CLI_ACTION_HPP
 #define TIYL_CLI_ACTION_HPP
-#include<string>
-#include<map>
 
-#include"cli/Utils.hpp"
-#include"cli/Context.hpp"
+#include"cli/Command.hpp"
+#include"cli/Completions.hpp"
 #include"projects/Action.hpp"
 
 namespace cli {
@@ -24,12 +22,12 @@ namespace cli {
 
 	int action(Context & c, Arguments const & args);
 
-	const std::map<std::string, Command> actionCommands = {
-		{"list", actionList},
-		{"show", actionShow},
-		{"add", actionAdd},
-		{"del", actionDone},
-		{"done", actionDone},
+	const Commands actionCommands = {
+		{"list", Command(actionList, noCompletions)},
+		{"show", Command(actionShow, noCompletions)},
+		{"add", Command(actionAdd, noCompletions)},
+		{"del", Command(actionDone, noCompletions)},
+		{"done", Command(actionDone, noCompletions)},
 	};
 
 }

@@ -1,10 +1,8 @@
 #ifndef TIYL_CLI_ANNUAL_HPP
 #define TIYL_CLI_ANNUAL_HPP
-#include<string>
-#include<map>
 
-#include"cli/Utils.hpp"
-#include"cli/Context.hpp"
+#include"cli/Command.hpp"
+#include"cli/Completions.hpp"
 #include"projects/Annual.hpp"
 
 namespace cli {
@@ -24,11 +22,11 @@ namespace cli {
 
 	int annual(Context & c, Arguments const & args);
 
-	const std::map<std::string, Command> annualCommands = {
-		{"list", annualList},
-		{"show", annualShow},
-		{"add", annualAdd},
-		{"del", annualDel},
+	const Commands annualCommands = {
+		{"list", Command(annualList, noCompletions)},
+		{"show", Command(annualShow, noCompletions)},
+		{"add", Command(annualAdd, noCompletions)},
+		{"del", Command(annualDel, noCompletions)},
 	};
 
 }

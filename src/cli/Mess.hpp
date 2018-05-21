@@ -1,10 +1,8 @@
 #ifndef TIYL_CLI_MESS_HPP
 #define TIYL_CLI_MESS_HPP
-#include<string>
-#include<map>
 
-#include"cli/Utils.hpp"
-#include"cli/Context.hpp"
+#include"cli/Command.hpp"
+#include"cli/Completions.hpp"
 
 namespace cli {
 
@@ -18,10 +16,10 @@ namespace cli {
 
 	int mess(Context & c, Arguments const & args);
 
-	const std::map<std::string, Command> messCommands = {
-		{"list", messList},
-		{"fix", messFix},
-		{"add", messAdd},
+	const Commands messCommands = {
+		{"list", Command(messList, noCompletions)},
+		{"fix", Command(messFix, noCompletions)},
+		{"add", Command(messAdd, noCompletions)},
 	};
 
 }

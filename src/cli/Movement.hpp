@@ -1,10 +1,7 @@
 #ifndef TIYL_CLI_MOVEMENT_HPP
 #define TIYL_CLI_MOVEMENT_HPP
-#include<string>
-#include<vector>
 
-#include"cli/Utils.hpp"
-#include"cli/Context.hpp"
+#include"cli/Command.hpp"
 
 namespace cli {
 

@@ -1,10 +1,8 @@
 #ifndef TIYL_CLI_PROJECT_HPP
 #define TIYL_CLI_PROJECT_HPP
-#include<string>
-#include<map>
 
-#include"cli/Utils.hpp"
-#include"cli/Context.hpp"
+#include"cli/Command.hpp"
+#include"cli/Completions.hpp"
 
 namespace cli {
 
@@ -20,12 +18,12 @@ namespace cli {
 
 	int project(Context & c, Arguments const & args);
 
-	const std::map<std::string, Command> projectCommands = {
-		{"show", projectShow},
-		{"freeze", projectFreeze},
-		{"thaw", projectThaw},
-		{"del", projectDelete},
-		{"add", projectCreate},
+	const Commands projectCommands = {
+		{"show", Command(projectShow, noCompletions)},
+		{"freeze", Command(projectFreeze, noCompletions)},
+		{"thaw", Command(projectThaw, noCompletions)},
+		{"del", Command(projectDelete, noCompletions)},
+		{"add", Command(projectCreate, noCompletions)},
 	};
 
 }

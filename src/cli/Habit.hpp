@@ -1,10 +1,8 @@
 #ifndef TIYL_CLI_HABIT_HPP
 #define TIYL_CLI_HABIT_HPP
-#include<string>
-#include<map>
 
-#include"cli/Utils.hpp"
-#include"cli/Context.hpp"
+#include"cli/Command.hpp"
+#include"cli/Completions.hpp"
 #include"projects/Habit.hpp"
 
 namespace cli {
@@ -26,12 +24,12 @@ namespace cli {
 
 	int habit(Context & c, Arguments const & args);
 
-	const std::map<std::string, Command> habitCommands = {
-		{"list", habitList},
-		{"show", habitShow},
-		{"add", habitAdd},
-		{"del", habitDel},
-		{"done", habitDone},
+	const Commands habitCommands = {
+		{"list", Command(habitList, noCompletions)},
+		{"show", Command(habitShow, noCompletions)},
+		{"add", Command(habitAdd, noCompletions)},
+		{"del", Command(habitDel, noCompletions)},
+		{"done", Command(habitDone, noCompletions)},
 	};
 
 }

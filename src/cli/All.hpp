@@ -1,10 +1,7 @@
 #ifndef TIYL_CLI_ALL_HPP
 #define TIYL_CLI_ALL_HPP
-#include<string>
-#include<map>
 
-#include"cli/Utils.hpp"
-#include"cli/Context.hpp"
+#include"cli/Command.hpp"
 #include"cli/Habit.hpp"
 #include"cli/Event.hpp"
 #include"cli/Annual.hpp"
@@ -31,12 +28,12 @@ namespace cli {
 
 	int all(Context & c, Arguments const & args);
 
-	const std::map<std::string, Command> allCommands = {
-		{"mess", allMess},
-		{"action", allAction},
-		{"habit", allHabit},
-		{"event", allEvent},
-		{"annual", allAnnual},
+	const Commands allCommands = {
+		{"mess", Command(allMess, noCompletions)},
+		{"action", Command(allAction, noCompletions)},
+		{"habit", Command(allHabit, noCompletions)},
+		{"event", Command(allEvent, noCompletions)},
+		{"annual", Command(allAnnual, noCompletions)},
 	};
 
 }
