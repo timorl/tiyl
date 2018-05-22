@@ -14,7 +14,7 @@ namespace cli {
 		return [&subcommands](Context const & c, Arguments const & args) -> Completions {
 			std::vector<std::string> subcommandNames;
 			for (auto const & cmd : subcommands) {
-				subcommandNames.push_back(cmd.first);
+				subcommandNames.push_back(cmd.first + " ");
 			}
 			Arguments newArgs;
 			std::string maybeName = splitSubcommand(args, newArgs, "");
