@@ -113,4 +113,10 @@ namespace cli {
 		return singleCommand(messCommands, c, subcommand, newArgs);
 	}
 
+	const Commands messCommands = {
+		{"list", Command(messList, noCompletions)},
+		{"fix", Command(messFix, messCompletions(nameCompletions(keyVector(fixes), noCompletions)))}, //Those are incomplete, but fixing this would be a pain.
+		{"add", Command(messAdd, noCompletions)},
+	};
+
 }

@@ -22,4 +22,8 @@ namespace cli {
 		return singleCommand(depCommands, c, subcommand, newArgs);
 	}
 
+	const Commands depCommands = {
+		{"add", Command(depAdd, dependentCompletions(dependencyCompletions(noCompletions)))},
+	};
+
 }

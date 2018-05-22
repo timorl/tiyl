@@ -27,7 +27,7 @@ namespace cli {
 		{"annual", Command(annual, subcommandCompletions(annualCommands))},
 		{"dep", Command(dep, subcommandCompletions(depCommands))},
 		{"all", Command(all, subcommandCompletions(allCommands))},
-		{"down", Command(down, noCompletions)},
+		{"down", Command(down, projectCompletions(noCompletions))},
 		{"up", Command(up, noCompletions)},
 		{"top", Command(top, noCompletions)},
 	};

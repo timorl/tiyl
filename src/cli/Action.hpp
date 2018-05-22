@@ -22,13 +22,7 @@ namespace cli {
 
 	int action(Context & c, Arguments const & args);
 
-	const Commands actionCommands = {
-		{"list", Command(actionList, noCompletions)},
-		{"show", Command(actionShow, actionCompletions(noCompletions))},
-		{"add", Command(actionAdd, noCompletions)},
-		{"del", Command(actionDone, actionCompletions(noCompletions))},
-		{"done", Command(actionDone, actionCompletions(noCompletions))},
-	};
+	extern const Commands actionCommands;
 
 }
 #endif

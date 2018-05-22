@@ -105,4 +105,12 @@ namespace cli {
 		return singleCommand(eventCommands, c, subcommand, newArgs);
 	}
 
+	const Commands eventCommands = {
+		{"list", Command(eventList, noCompletions)},
+		{"show", Command(eventShow, eventCompletions(noCompletions))},
+		{"add", Command(eventAdd, noCompletions)},
+		{"del", Command(eventDel, eventCompletions(noCompletions))},
+		{"done", Command(eventDel, eventCompletions(noCompletions))},
+	};
+
 }

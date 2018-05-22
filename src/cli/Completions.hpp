@@ -15,5 +15,19 @@ namespace cli {
 
 	CompletionFunction actionCompletions(CompletionFunction const & further);
 
+	CompletionFunction annualCompletions(CompletionFunction const & further);
+
+	CompletionFunction projectCompletions(CompletionFunction const & further);
+
+	CompletionFunction dependentCompletions(CompletionFunction const & further);
+
+	CompletionFunction dependencyCompletions(CompletionFunction const & further);
+
+	CompletionFunction eventCompletions(CompletionFunction const & further);
+
+	CompletionFunction habitCompletions(CompletionFunction const & further);
+
+	CompletionFunction messCompletions(CompletionFunction const & further);
+
 }
 #endif

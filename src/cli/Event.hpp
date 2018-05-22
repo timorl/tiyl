@@ -22,13 +22,7 @@ namespace cli {
 
 	int event(Context & c, Arguments const & args);
 
-	const Commands eventCommands = {
-		{"list", Command(eventList, noCompletions)},
-		{"show", Command(eventShow, noCompletions)},
-		{"add", Command(eventAdd, noCompletions)},
-		{"del", Command(eventDel, noCompletions)},
-		{"done", Command(eventDel, noCompletions)},
-	};
+	extern const Commands eventCommands;
 
 }
 #endif

@@ -22,12 +22,7 @@ namespace cli {
 
 	int annual(Context & c, Arguments const & args);
 
-	const Commands annualCommands = {
-		{"list", Command(annualList, noCompletions)},
-		{"show", Command(annualShow, noCompletions)},
-		{"add", Command(annualAdd, noCompletions)},
-		{"del", Command(annualDel, noCompletions)},
-	};
+	extern const Commands annualCommands;
 
 }
 #endif

@@ -58,10 +58,10 @@ namespace cli {
 		}
 		maybeName = quotationMark + maybeName;
 		Completions result;
-		if (std::find(suggestedNames.begin(), suggestedNames.end(), maybeName) != suggestedNames.end()) {
+		if (std::find(suggestedNames.begin(), suggestedNames.end(), maybeName + quotationMark + " ") != suggestedNames.end()) {
 			result = further(c, newArgs);
 			for (std::string & cmpl : result) {
-				cmpl = maybeName + cmpl;
+				cmpl = maybeName + quotationMark + " " + cmpl;
 			}
 			return result;
 		}
@@ -78,8 +78,50 @@ namespace cli {
 	}
 
 	CompletionFunction actionCompletions(CompletionFunction const & further) {
-		return [&further](Context const & c, Arguments const & args) -> Completions {
+		return [further](Context const & c, Arguments const & args) -> Completions {
 			return nameCompletionsRaw(keyVector(c.getProject().getActions()), further, c, args);
+		};
+	}
+
+	CompletionFunction annualCompletions(CompletionFunction const & further) {
+		return [further](Context const & c, Arguments const & args) -> Completions {
+			return nameCompletionsRaw(keyVector(c.getProject().getAnnuals()), further, c, args);
+		};
+	}
+
+	CompletionFunction projectCompletions(CompletionFunction const & further) {
+		return [further](Context const & c, Arguments const & args) -> Completions {
+			return nameCompletionsRaw(keyVector(c.getProject().getSubprojects()), further, c, args);
+		};
+	}
+
+	CompletionFunction dependentCompletions(CompletionFunction const & further) {
+		return [further](Context const & c, Arguments const & args) -> Completions {
+			return nameCompletionsRaw(keyVector(c.getProject().getPossibleDependents()), further, c, args);
+		};
+	}
+
+	CompletionFunction dependencyCompletions(CompletionFunction const & further) {
+		return [further](Context const & c, Arguments const & args) -> Completions {
+			return nameCompletionsRaw(keyVector(c.getProject().getPossibleDependencies()), further, c, args);
+		};
+	}
+
+	CompletionFunction eventCompletions(CompletionFunction const & further) {
+		return [further](Context const & c, Arguments const & args) -> Completions {
+			return nameCompletionsRaw(keyVector(c.getProject().getEvents()), further, c, args);
+		};
+	}
+
+	CompletionFunction habitCompletions(CompletionFunction const & further) {
+		return [further](Context const & c, Arguments const & args) -> Completions {
+			return nameCompletionsRaw(keyVector(c.getProject().getHabits()), further, c, args);
+		};
+	}
+
+	CompletionFunction messCompletions(CompletionFunction const & further) {
+		return [further](Context const & c, Arguments const & args) -> Completions {
+			return nameCompletionsRaw(keyVector(c.getProject().getMess()), further, c, args);
 		};
 	}
 

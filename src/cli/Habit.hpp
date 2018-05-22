@@ -24,13 +24,7 @@ namespace cli {
 
 	int habit(Context & c, Arguments const & args);
 
-	const Commands habitCommands = {
-		{"list", Command(habitList, noCompletions)},
-		{"show", Command(habitShow, noCompletions)},
-		{"add", Command(habitAdd, noCompletions)},
-		{"del", Command(habitDel, noCompletions)},
-		{"done", Command(habitDone, noCompletions)},
-	};
+	extern const Commands habitCommands;
 
 }
 #endif

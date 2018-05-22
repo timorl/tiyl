@@ -27,7 +27,7 @@ namespace cli {
 			}
 		}
 		result = input.substr(start, end - start);
-		start = end;
+		start = end+1;
 		return result;
 	}
 
@@ -36,7 +36,7 @@ namespace cli {
 		unsigned long long position = 0;
 		while (position < input.length()) {
 			std::string token = getSingleToken(input, position);
-			if (token.length() != 0) {
+			if (!token.empty()) {
 				result.push_back(token);
 			}
 		}

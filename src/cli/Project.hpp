@@ -18,13 +18,7 @@ namespace cli {
 
 	int project(Context & c, Arguments const & args);
 
-	const Commands projectCommands = {
-		{"show", Command(projectShow, noCompletions)},
-		{"freeze", Command(projectFreeze, noCompletions)},
-		{"thaw", Command(projectThaw, noCompletions)},
-		{"del", Command(projectDelete, noCompletions)},
-		{"add", Command(projectCreate, noCompletions)},
-	};
+	extern const Commands projectCommands;
 
 }
 #endif

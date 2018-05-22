@@ -105,4 +105,11 @@ namespace cli {
 		return singleCommand(annualCommands, c, subcommand, newArgs);
 	}
 
+	const Commands annualCommands = {
+		{"list", Command(annualList, noCompletions)},
+		{"show", Command(annualShow, annualCompletions(noCompletions))},
+		{"add", Command(annualAdd, noCompletions)},
+		{"del", Command(annualDel, annualCompletions(noCompletions))},
+	};
+
 }

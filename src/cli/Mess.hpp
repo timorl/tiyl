@@ -16,11 +16,7 @@ namespace cli {
 
 	int mess(Context & c, Arguments const & args);
 
-	const Commands messCommands = {
-		{"list", Command(messList, noCompletions)},
-		{"fix", Command(messFix, noCompletions)},
-		{"add", Command(messAdd, noCompletions)},
-	};
+	extern const Commands messCommands;
 
 }
 #endif

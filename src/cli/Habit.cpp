@@ -113,4 +113,12 @@ namespace cli {
 		return singleCommand(habitCommands, c, subcommand, newArgs);
 	}
 
+	const Commands habitCommands = {
+		{"list", Command(habitList, noCompletions)},
+		{"show", Command(habitShow, habitCompletions(noCompletions))},
+		{"add", Command(habitAdd, noCompletions)},
+		{"del", Command(habitDel, habitCompletions(noCompletions))},
+		{"done", Command(habitDone, habitCompletions(noCompletions))},
+	};
+
 }

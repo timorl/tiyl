@@ -102,4 +102,12 @@ namespace cli {
 		return singleCommand(actionCommands, c, subcommand, newArgs);
 	}
 
+	const Commands actionCommands = {
+		{"list", Command(actionList, noCompletions)},
+		{"show", Command(actionShow, actionCompletions(noCompletions))},
+		{"add", Command(actionAdd, noCompletions)},
+		{"del", Command(actionDone, actionCompletions(noCompletions))},
+		{"done", Command(actionDone, actionCompletions(noCompletions))},
+	};
+
 }

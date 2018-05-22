@@ -124,4 +124,12 @@ namespace cli {
 		return singleCommand(projectCommands, c, subcommand, newArgs);
 	}
 
+	const Commands projectCommands = {
+		{"show", Command(projectShow, projectCompletions(noCompletions))},
+		{"freeze", Command(projectFreeze, noCompletions)},
+		{"thaw", Command(projectThaw, noCompletions)},
+		{"del", Command(projectDelete, projectCompletions(noCompletions))},
+		{"add", Command(projectCreate, noCompletions)},
+	};
+
 }

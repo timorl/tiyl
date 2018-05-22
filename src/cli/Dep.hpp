@@ -10,9 +10,7 @@ namespace cli {
 
 	int dep(Context & c, Arguments const & args);
 
-	const Commands depCommands = {
-		{"add", Command(depAdd, noCompletions)},
-	};
+	extern const Commands depCommands;
 
 }
 #endif
