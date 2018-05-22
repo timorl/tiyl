@@ -28,13 +28,7 @@ namespace cli {
 
 	int all(Context & c, Arguments const & args);
 
-	const Commands allCommands = {
-		{"mess", Command(allMess, noCompletions)},
-		{"action", Command(allAction, noCompletions)},
-		{"habit", Command(allHabit, noCompletions)},
-		{"event", Command(allEvent, noCompletions)},
-		{"annual", Command(allAnnual, noCompletions)},
-	};
+	extern const Commands allCommands;
 
 }
 #endif

@@ -56,7 +56,7 @@ namespace cli {
 		if (maybeName.length() == 0) {
 			return suggestedNames;
 		}
-		maybeName = quotationMark + maybeName + quotationMark + " ";
+		maybeName = quotationMark + maybeName;
 		Completions result;
 		if (std::find(suggestedNames.begin(), suggestedNames.end(), maybeName) != suggestedNames.end()) {
 			result = further(c, newArgs);

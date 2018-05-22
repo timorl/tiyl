@@ -130,15 +130,27 @@ namespace projects {
 
 	void accumulateAll(Subprojects & sps, Subproject const & sp);
 
+	using ProjectAccumulator = std::function<void(Subprojects &, Subproject const &)>;
+
 	void accumulateMess(Mess & m, Subproject const & sp);
+
+	using MessAccumulator = std::function<void(Mess &, Subproject const &)>;
 
 	void accumulateActions(Actions & a, Subproject const & sp);
 
+	using ActionAccumulator = std::function<void(Actions &, Subproject const &)>;
+
 	void accumulateHabits(Habits & h, Subproject const & sp);
+
+	using HabitAccumulator = std::function<void(Habits &, Subproject const &)>;
 
 	void accumulateEvents(Events & e, Subproject const & sp);
 
+	using EventAccumulator = std::function<void(Events &, Subproject const &)>;
+
 	void accumulateAnnuals(Annuals & a, Subproject const & sp);
+
+	using AnnualAccumulator = std::function<void(Annuals &, Subproject const &)>;
 
 	void accumulateNonactionable(Subprojects & sps, Subproject const & sp);
 

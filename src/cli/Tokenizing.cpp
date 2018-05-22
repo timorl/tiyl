@@ -18,7 +18,7 @@ namespace cli {
 			}
 			end = input.find('"', start);
 			if (end == std::string::npos) {
-				end = input.length()-1;
+				end = input.length();
 			}
 		} else {
 			end = input.find(' ', start);
@@ -27,7 +27,7 @@ namespace cli {
 			}
 		}
 		result = input.substr(start, end - start);
-		start = end+1;
+		start = end;
 		return result;
 	}
 

@@ -23,25 +23,22 @@ namespace cli {
 		return accumulateSoonAnnuals;
 	}
 
-	std::function<void(Annuals &, Subproject const &)> annualAccumulator(Arguments const & args) {
-		Arguments newArgs;
-		std::string condition = splitSubcommand(args, newArgs, "");
-		if (condition.empty()) {
-			return projects::accumulateAnnuals;
-		}
-		if (condition == "within") {
-			int days = requestInt("How many days", newArgs, 21);
-			return accumulateSoonAnnualsCreator(days);
-		}
-		if (condition == "soon") {
-			return accumulateSoonAnnualsCreator(21);
-		}
-		return projects::accumulateAnnuals;
-	}
+	const std::map<std::string, std::function<projects::AnnualAccumulator(Arguments const &)>> annualAccumulator = {
+		{"", [](Arguments const &)->projects::AnnualAccumulator{return projects::accumulateAnnuals;}},
+		{"within", [](Arguments const & args)->projects::AnnualAccumulator{
+				Arguments newArgs = args;
+				int days = requestInt("How many days", newArgs, 21);
+				return accumulateSoonAnnualsCreator(days);
+			}
+		},
+		{"soon", [](Arguments const &)->projects::AnnualAccumulator{return accumulateSoonAnnualsCreator(21);}},
+	};
 
 	int allAnnual(Context & c, Arguments const & args) {
 		Annuals annuals;
-		c.getProject().accumulateFromSubprojects(annuals, annualAccumulator(args));
+		Arguments newArgs;
+		std::string condition = splitSubcommand(args, newArgs, "");
+		c.getProject().accumulateFromSubprojects(annuals, annualAccumulator.at(condition)(args));
 		printAnnualNames(annuals);
 		return 0;
 	}
@@ -60,25 +57,22 @@ namespace cli {
 		return accumulateSoonEvents;
 	}
 
-	std::function<void(Events &, Subproject const &)> eventAccumulator(Arguments const & args) {
-		Arguments newArgs;
-		std::string condition = splitSubcommand(args, newArgs, "");
-		if (condition.empty()) {
-			return projects::accumulateEvents;
-		}
-		if (condition == "within") {
-			int days = requestInt("How many days", newArgs, 21);
-			return accumulateSoonEventsCreator(days);
-		}
-		if (condition == "soon") {
-			return accumulateSoonEventsCreator(21);
-		}
-		return projects::accumulateEvents;
-	}
+	const std::map<std::string, std::function<projects::EventAccumulator(Arguments const &)>> eventAccumulator = {
+		{"", [](Arguments const &)->projects::EventAccumulator{return projects::accumulateEvents;}},
+		{"within", [](Arguments const & args)->projects::EventAccumulator{
+				Arguments newArgs = args;
+				int days = requestInt("How many days", newArgs, 21);
+				return accumulateSoonEventsCreator(days);
+			}
+		},
+		{"soon", [](Arguments const &)->projects::EventAccumulator{return accumulateSoonEventsCreator(21);}},
+	};
 
 	int allEvent(Context & c, Arguments const & args) {
 		Events events;
-		c.getProject().accumulateFromSubprojects(events, eventAccumulator(args));
+		Arguments newArgs;
+		std::string condition = splitSubcommand(args, newArgs, "");
+		c.getProject().accumulateFromSubprojects(events, eventAccumulator.at(condition)(newArgs));
 		printEventNames(events);
 		return 0;
 	}
@@ -103,24 +97,17 @@ namespace cli {
 		sp.second.accumulateFromSubprojects(h, accumulatePastHabits);
 	}
 
-	std::function<void(Habits &, Subproject const &)> habitAccumulator(Arguments const & args) {
-		Arguments newArgs;
-		std::string condition = splitSubcommand(args, newArgs, "");
-		if (condition.empty()) {
-			return projects::accumulateHabits;
-		}
-		if (condition == "due") {
-			return accumulateDueHabits;
-		}
-		if (condition == "past") {
-			return accumulatePastHabits;
-		}
-		return projects::accumulateHabits;
-	}
+	const std::map<std::string, projects::HabitAccumulator> habitAccumulator = {
+		{"", projects::accumulateHabits},
+		{"due", accumulateDueHabits},
+		{"past", accumulatePastHabits},
+	};
 
 	int allHabit(Context & c, Arguments const & args) {
 		Habits habits;
-		c.getProject().accumulateFromSubprojects(habits, habitAccumulator(args));
+		Arguments newArgs;
+		std::string condition = splitSubcommand(args, newArgs, "");
+		c.getProject().accumulateFromSubprojects(habits, habitAccumulator.at(condition));
 		printHabitNames(habits);
 		return 0;
 	}
@@ -135,7 +122,7 @@ namespace cli {
 		sp.second.accumulateFromSubprojects(a, accumulateDoableActions);
 	}
 
-	std::map<std::string, std::function<void(Actions &, Subproject const &)>> actionAccumulator = {
+	const std::map<std::string, projects::ActionAccumulator> actionAccumulator = {
 		{"", projects::accumulateActions},
 		{"doable", accumulateDoableActions},
 	};
@@ -144,7 +131,7 @@ namespace cli {
 		Actions actions;
 		Arguments newArgs;
 		std::string condition = splitSubcommand(args, newArgs, "");
-		c.getProject().accumulateFromSubprojects(actions, actionAccumulator[condition]);
+		c.getProject().accumulateFromSubprojects(actions, actionAccumulator.at(condition));
 		printActionNames(actions);
 		return 0;
 	}
@@ -161,5 +148,13 @@ namespace cli {
 		std::string subcommand = splitSubcommand(args, newArgs, "action");
 		return singleCommand(allCommands, c, subcommand, newArgs);
 	}
+
+	const Commands allCommands = {
+		{"mess", Command(allMess, noCompletions)},
+		{"action", Command(allAction, nameCompletions(keyVector(actionAccumulator), noCompletions))},
+		{"habit", Command(allHabit, nameCompletions(keyVector(habitAccumulator), noCompletions))},
+		{"event", Command(allEvent, nameCompletions(keyVector(eventAccumulator), noCompletions))},
+		{"annual", Command(allAnnual, nameCompletions(keyVector(annualAccumulator), noCompletions))},
+	};
 
 }
