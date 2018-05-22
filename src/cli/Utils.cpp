@@ -45,32 +45,35 @@ namespace cli {
 		return util::stringToAnnual(answer);
 	}
 
-	int decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer) {
+	std::string decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer) {
+		if (std::find(from.begin(), from.end(), answer) != from.end()) {
+			return answer;
+		}
 		int pid;
 		pid = decodeNumber(answer);
-		if (pid == -1) {
-			return -1;
+		if (pid < 0) {
+			return "";
 		}
 		unsigned int id = pid;
-		if ( id >= from.size() ) {
+		if (id >= from.size()) {
 			std::cout << "No " << what << " with id " << id << "." << std::endl;
-			return -1;
+			return "";
 		}
-		return id;
+		return from.at(id);
 	}
 
-	int requestChoice(std::vector<std::string> const & from, std::string const & what) {
+	std::string requestChoice(std::vector<std::string> const & from, std::string const & what) {
 		std::cout << "Pick a " << what << ":" << std::endl;
 		for (unsigned int i = 0; i < from.size(); i++) {
 			std::cout << i << ". " << from.at(i) << std::endl;
 		}
-		int choice = -1;
-		while ( choice == -1 ) {
+		std::string choice("");
+		while (choice.empty()) {
 			std::cout << "Your choice: ";
 			std::string answer;
 			if ( !std::getline(std::cin, answer) ) {
 				std::cin.clear();
-				return -1;
+				return "";
 			}
 			choice = decodeChoice(from, what, answer);
 		}
@@ -166,16 +169,13 @@ namespace cli {
 		Arguments newArgs;
 		std::string ans = splitSubcommand(args, newArgs, "");
 		args = newArgs;
-		int id;
+		std::string result("");
 		if ( !ans.empty() ) {
-			id = decodeChoice(names, what, ans);
+			result = decodeChoice(names, what, ans);
 		} else {
-			id = requestChoice(names, what);
+			result = requestChoice(names, what);
 		}
-		if (id == -1) {
-			return "";
-		}
-		return names.at(id);
+		return result;
 	}
 
 }

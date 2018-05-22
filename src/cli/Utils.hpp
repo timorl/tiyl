@@ -22,9 +22,9 @@ namespace cli {
 
 	Date decodeAnnual(std::string answer);
 
-	int decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer);
+	std::string decodeChoice(std::vector<std::string> const & from, std::string const & what, std::string answer);
 
-	int requestChoice(std::vector<std::string> const & from, std::string const & what);
+	std::string requestChoice(std::vector<std::string> const & from, std::string const & what);
 
 	bool confirmation(std::string problem);
 

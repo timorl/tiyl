@@ -59,27 +59,20 @@ namespace cli {
 		return 0;
 	}
 
-	const std::vector<std::function<int(Context &, Arguments const &, std::string const &)>> fixes = {
-		deleteFix,
-		downFix,
-		actionFix,
-		subprojectFix,
+	const std::map<std::string, std::function<int(Context &, Arguments const &, std::string const &)>> fixes = {
+		{"Delete", deleteFix},
+		{"Push down", downFix},
+		{"Convert to action", actionFix},
+		{"Convert to subproject", subprojectFix},
 	};
 
 	int messFixer(Context & c, Arguments const & args, std::string const & messItem) {
-		Arguments newArgs;
-		std::string methodChoice = splitSubcommand(args, newArgs, "");
-		std::vector<std::string> options{"Delete", "Push down", "Convert to action", "Convert to subproject"};
-		int optionId;
-		if ( !methodChoice.empty() ) {
-			optionId = decodeChoice(options, "option", methodChoice);
-		} else {
-			optionId = requestChoice(options, "option");
-		}
-		if (optionId == -1) {
+		Arguments a = args;
+		std::string option = chooseFrom(keyVector(fixes), a, "option");
+		if (option.empty()) {
 			return 1;
 		}
-		return fixes[optionId](c, newArgs, messItem);
+		return fixes.at(option)(c, a, messItem);
 	}
 
 	int messFix(Context & c, Arguments const & args) {
