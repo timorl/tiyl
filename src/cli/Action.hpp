@@ -24,10 +24,10 @@ namespace cli {
 
 	const Commands actionCommands = {
 		{"list", Command(actionList, noCompletions)},
-		{"show", Command(actionShow, noCompletions)},
+		{"show", Command(actionShow, actionCompletions(noCompletions))},
 		{"add", Command(actionAdd, noCompletions)},
-		{"del", Command(actionDone, noCompletions)},
-		{"done", Command(actionDone, noCompletions)},
+		{"del", Command(actionDone, actionCompletions(noCompletions))},
+		{"done", Command(actionDone, actionCompletions(noCompletions))},
 	};
 
 }

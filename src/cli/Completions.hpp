@@ -11,5 +11,9 @@ namespace cli {
 
 	CompletionFunction subcommandCompletions(Commands const & subcommands);
 
+	CompletionFunction nameCompletions(std::vector<std::string> const & names, CompletionFunction const & further);
+
+	CompletionFunction actionCompletions(CompletionFunction const & further);
+
 }
 #endif
