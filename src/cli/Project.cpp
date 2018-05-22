@@ -90,7 +90,7 @@ namespace cli {
 			return 2;
 		}
 		Arguments a = args;
-		std::string name = chooseFrom(subprojects, a, "subproject");
+		std::string name = chooseFrom(keyVector(subprojects), a, "subproject");
 		if (name.empty()) {
 			return 1;
 		}

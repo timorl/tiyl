@@ -47,7 +47,7 @@ namespace cli {
 			return 2;
 		}
 		Arguments a = args;
-		std::string name = chooseFrom(habits, a, "habit");
+		std::string name = chooseFrom(keyVector(habits), a, "habit");
 		if (name.empty()) {
 			return 1;
 		}
@@ -78,7 +78,7 @@ namespace cli {
 			return 2;
 		}
 		Arguments a = args;
-		std::string name = chooseFrom(habits, a, "habit");
+		std::string name = chooseFrom(keyVector(habits), a, "habit");
 		if (name.empty()) {
 			return 1;
 		}
@@ -99,7 +99,7 @@ namespace cli {
 			return 2;
 		}
 		Arguments a = args;
-		std::string name = chooseFrom(habits, a, "habit");
+		std::string name = chooseFrom(keyVector(habits), a, "habit");
 		if (name.empty()) {
 			return 1;
 		}

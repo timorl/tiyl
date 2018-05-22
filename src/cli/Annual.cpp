@@ -70,7 +70,7 @@ namespace cli {
 			return 2;
 		}
 		Arguments a = args;
-		std::string name = chooseFrom(annuals, a, "annual");
+		std::string name = chooseFrom(keyVector(annuals), a, "annual");
 		if (name.empty()) {
 			return 1;
 		}
@@ -91,7 +91,7 @@ namespace cli {
 			return 2;
 		}
 		Arguments a = args;
-		std::string name = chooseFrom(annuals, a, "annual");
+		std::string name = chooseFrom(keyVector(annuals), a, "annual");
 		if (name.empty()) {
 			return 1;
 		}

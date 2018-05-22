@@ -55,7 +55,7 @@ namespace cli {
 			return 2;
 		}
 		Arguments a = args;
-		std::string name = chooseFrom(actions, a, "action");
+		std::string name = chooseFrom(keyVector(actions), a, "action");
 		if (name.empty()) {
 			return 1;
 		}
@@ -91,7 +91,7 @@ namespace cli {
 			return 2;
 		}
 		Arguments a = args;
-		std::string name = chooseFrom(actions, a, "action");
+		std::string name = chooseFrom(keyVector(actions), a, "action");
 		printAction(Action(name, actions.at(name)));
 		return 0;
 	}

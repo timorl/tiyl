@@ -154,11 +154,15 @@ namespace cli {
 		return result;
 	}
 
-	std::string chooseFromSet(std::set<std::string> const & pool, Arguments & args, std::string const & what) {
-		std::vector<std::string> names;
+	std::vector<std::string> keyVector(std::set<std::string> const & pool) {
+		std::vector<std::string> result;
 		for (std::string const & a : pool) {
-			names.push_back(a);
+			result.push_back(a);
 		}
+		return result;
+	}
+
+	std::string chooseFrom(std::vector<std::string> const & names, Arguments & args, std::string const & what) {
 		Arguments newArgs;
 		std::string ans = splitSubcommand(args, newArgs, "");
 		args = newArgs;

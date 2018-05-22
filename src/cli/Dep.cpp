@@ -7,8 +7,8 @@ namespace cli {
 
 	int depAdd(Context & c, Arguments const & args) {
 		Arguments a = args;
-		std::string what = chooseFromSet(c.getProject().getPossibleDependents(), a, "dependent");
-		std::string onWhat = chooseFromSet(c.getProject().getPossibleDependencies(), a, "dependency");
+		std::string what = chooseFrom(keyVector(c.getProject().getPossibleDependents()), a, "dependent");
+		std::string onWhat = chooseFrom(keyVector(c.getProject().getPossibleDependencies()), a, "dependency");
 		if ( !c.addDependency(what, onWhat) ) {
 			std::cout << "Incorrect dependency." << std::endl;
 			return 1;
