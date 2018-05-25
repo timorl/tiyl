@@ -20,6 +20,8 @@ namespace cli {
 	using Annual = projects::Annual;
 	using Mess = projects::Mess;
 
+	using ProjectPath = std::vector<std::string>;
+
 	const std::string ROOT_NAME("Life");
 
 	class Context {
@@ -34,14 +36,20 @@ namespace cli {
 
 			Project const & getProject() const { return *current; }
 
+			Project const & getProject(std::vector<std::string> const & path) const;
+
 			Project const & getMainProject() const { return life; }
 
 			std::string const & getCurrentName() const { return currentName; }
 
 
-			bool moveToChild(std::string childName);
+			bool moveToChild(ProjectPath const & genealogy);
+
+			bool moveToChild(std::string const & name);
 
 			bool moveUp();
+
+			void moveUp(ProjectPath const & genealogy);
 
 			void moveTop();
 
@@ -52,27 +60,41 @@ namespace cli {
 
 			void delMess(std::string const & name);
 
+			void delMess(ProjectPath const & genealogy, std::string const & name);
+
 			bool addAction(Action && a);
 
 			void delAction(std::string const & name);
+
+			void delAction(ProjectPath const & genealogy, std::string const & name);
 
 			bool addHabit(Habit && h);
 
 			void doHabit(std::string const & name);
 
+			void doHabit(ProjectPath const & genealogy, std::string const & name);
+
 			void delHabit(std::string const & name);
+
+			void delHabit(ProjectPath const & genealogy, std::string const & name);
 
 			bool addEvent(Event && e);
 
 			void delEvent(std::string const & name);
 
+			void delEvent(ProjectPath const & genealogy, std::string const & name);
+
 			bool addAnnual(Annual && a);
 
 			void delAnnual(std::string const & name);
 
+			void delAnnual(ProjectPath const & genealogy, std::string const & name);
+
 			bool addSubproject(Subproject && s);
 
 			void delSubproject(std::string const & name);
+
+			void delSubproject(ProjectPath const & genealogy, std::string const & name);
 
 			bool addDependency(std::string what, std::string onWhat);
 

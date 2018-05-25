@@ -32,6 +32,7 @@ set(COMMON_HDRS
 	${PROJECT_SOURCE_DIR}/nlohmann/json.hpp
 	${PROJECT_SOURCE_DIR}/util/Dates.hpp
 	${PROJECT_SOURCE_DIR}/util/Config.hpp
+	${PROJECT_SOURCE_DIR}/util/Parsing.hpp
 	${PROJECT_SOURCE_DIR}/projects/Project.hpp
 	${PROJECT_SOURCE_DIR}/projects/Action.hpp
 	${PROJECT_SOURCE_DIR}/projects/Habit.hpp
@@ -41,7 +42,6 @@ set(COMMON_HDRS
 	${PROJECT_SOURCE_DIR}/database/Files.hpp
 	${PROJECT_SOURCE_DIR}/cli/Pretty.hpp
 	${PROJECT_SOURCE_DIR}/cli/Utils.hpp
-	${PROJECT_SOURCE_DIR}/cli/Tokenizing.hpp
 	${PROJECT_SOURCE_DIR}/cli/Context.hpp
 	${PROJECT_SOURCE_DIR}/cli/Movement.hpp
 	${PROJECT_SOURCE_DIR}/cli/Mess.hpp
@@ -62,6 +62,7 @@ set(COMMON_HDRS
 set(COMMON_SRCS
 	${PROJECT_SOURCE_DIR}/util/Dates.cpp
 	${PROJECT_SOURCE_DIR}/util/Config.cpp
+	${PROJECT_SOURCE_DIR}/util/Parsing.cpp
 	${PROJECT_SOURCE_DIR}/projects/Project.cpp
 	${PROJECT_SOURCE_DIR}/projects/Action.cpp
 	${PROJECT_SOURCE_DIR}/projects/Habit.cpp
@@ -71,7 +72,6 @@ set(COMMON_SRCS
 	${PROJECT_SOURCE_DIR}/database/Files.cpp
 	${PROJECT_SOURCE_DIR}/cli/Pretty.cpp
 	${PROJECT_SOURCE_DIR}/cli/Utils.cpp
-	${PROJECT_SOURCE_DIR}/cli/Tokenizing.cpp
 	${PROJECT_SOURCE_DIR}/cli/Context.cpp
 	${PROJECT_SOURCE_DIR}/cli/Movement.cpp
 	${PROJECT_SOURCE_DIR}/cli/Mess.cpp
@@ -104,7 +104,7 @@ target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
 
 set(TEST_SOURCES
 	${PROJECT_SOURCE_DIR}/util/tests/Dates.cpp
-	${PROJECT_SOURCE_DIR}/cli/tests/Tokenizing.cpp
+	${PROJECT_SOURCE_DIR}/util/tests/Parsing.cpp
 	)
 add_executable(tests ${COMMON_HDRS} ${COMMON_SRCS} ${TEST_SOURCES} ${PROJECT_SOURCE_DIR}/tests.cpp)
 target_link_libraries(tests Catch linenoise stdc++fs)

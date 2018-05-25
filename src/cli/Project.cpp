@@ -84,22 +84,30 @@ namespace cli {
 	}
 
 	int projectDelete(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Subprojects const & subprojects = c.getProject().getSubprojects();
 		if (subprojects.empty()) {
 			std::cout << "No subprojects." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(subprojects), a, "subproject");
 		if (name.empty()) {
+			c.moveUp(path);
 			return 1;
 		}
 		if (!subprojects.at(name).empty()) {
 			if (!confirmation("The chosen subproject is not empty.")) {
-				return 3;
+				c.moveUp(path);
+				return 4;
 			}
 		}
 		c.delSubproject(name);
+		c.moveUp(path);
 		return 0;
 	}
 

@@ -64,17 +64,24 @@ namespace cli {
 	}
 
 	int annualDel(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Annuals const & annuals = c.getProject().getAnnuals();
 		if (annuals.empty()) {
 			std::cout << "No annuals." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(annuals), a, "annual");
 		if (name.empty()) {
+			c.moveUp(path);
 			return 1;
 		}
 		c.delAnnual(name);
+		c.moveUp(path);
 		return 0;
 	}
 
@@ -85,17 +92,24 @@ namespace cli {
 	}
 
 	int annualShow(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Annuals const & annuals = c.getProject().getAnnuals();
 		if (annuals.empty()) {
 			std::cout << "No annuals." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(annuals), a, "annual");
 		if (name.empty()) {
+			c.moveUp(path);
 			return 1;
 		}
 		printAnnual(Annual(name, annuals.at(name)));
+		c.moveUp(path);
 		return 0;
 	}
 

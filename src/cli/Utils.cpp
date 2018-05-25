@@ -2,10 +2,35 @@
 
 #include<iostream>
 
+#include"util/Parsing.hpp"
+
 namespace cli {
 
 	void unknownCommandError(std::string const & name) {
 		std::cout << "Unknown command: " << name << std::endl;
+	}
+
+	bool moveDownWithArgs(Context & c, Arguments & args, ProjectPath & path) {
+		if (!args.empty()) {
+			path = util::tokenizePath(args.at(0));
+			std::string name("");
+			for (std::string & p : path) {
+				//This should actually only do the else sometimes as the last thing in the loop.
+				if (p.back() == '/') {
+					p.pop_back();
+				} else {
+					name = p;
+				}
+			}
+			if (!name.empty()) {
+				path.pop_back();
+			}
+			if (!c.moveToChild(path)) {
+				return false;
+			}
+			args[0] = name;
+		}
+		return true;
 	}
 
 	int singleCommand(Commands const & commands, Context & c, std::string const & name, Arguments const & args) {

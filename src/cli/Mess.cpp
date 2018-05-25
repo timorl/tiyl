@@ -76,14 +76,20 @@ namespace cli {
 	}
 
 	int messFix(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Mess const & mess = c.getProject().getMess();
 		if (mess.empty()) {
 			std::cout << "No mess." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(mess), a, "mess");
 		if (name.empty()) {
+			c.moveUp(path);
 			return 1;
 		}
 		return messFixer(c, a, name);

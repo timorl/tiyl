@@ -49,17 +49,24 @@ namespace cli {
 	}
 
 	int actionDone(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Actions const & actions = c.getProject().getActions();
 		if (actions.empty()) {
 			std::cout << "No actions." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(actions), a, "action");
 		if (name.empty()) {
+			c.moveUp(path);
 			return 1;
 		}
 		c.delAction(name);
+		c.moveUp(path);
 		return 0;
 	}
 
@@ -85,14 +92,24 @@ namespace cli {
 	}
 
 	int actionShow(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Actions const & actions = c.getProject().getActions();
 		if (actions.empty()) {
 			std::cout << "No actions." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(actions), a, "action");
+		if (name.empty()) {
+			c.moveUp(path);
+			return 1;
+		}
 		printAction(Action(name, actions.at(name)));
+		c.moveUp(path);
 		return 0;
 	}
 

@@ -3,7 +3,7 @@
 #include<iostream>
 #include<memory>
 
-#include"cli/Tokenizing.hpp"
+#include"util/Parsing.hpp"
 
 #include"linenoise/linenoise.h"
 
@@ -11,7 +11,7 @@ namespace cli {
 
 	std::function<void(const char *, linenoiseCompletions *)> completionForContext(Context const & c) {
 		return [&c](const char * buf, linenoiseCompletions * lc) {
-			Arguments tokenized = tokenize(buf);
+			Arguments tokenized = util::tokenize(buf);
 			Completions result = subcommandCompletions(commands)(c, tokenized);
 			for (std::string const & cmpl : result) {
 				linenoiseAddCompletion(lc, cmpl.c_str());
@@ -51,7 +51,7 @@ namespace cli {
 		initLinenoise(c);
 		std::string input;
 		while (prompt(c, input)) {
-			Arguments tokenized = tokenize(input);
+			Arguments tokenized = util::tokenize(input);
 			if (tokenized.empty()) {
 				continue;
 			}

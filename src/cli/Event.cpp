@@ -64,17 +64,24 @@ namespace cli {
 	}
 
 	int eventDel(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Events const & events = c.getProject().getEvents();
 		if (events.empty()) {
 			std::cout << "No events." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(events), a, "event");
 		if (name.empty()) {
+			c.moveUp(path);
 			return 1;
 		}
 		c.delEvent(name);
+		c.moveUp(path);
 		return 0;
 	}
 
@@ -85,17 +92,24 @@ namespace cli {
 	}
 
 	int eventShow(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Events const & events = c.getProject().getEvents();
 		if (events.empty()) {
 			std::cout << "No events." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(events), a, "event");
 		if (name.empty()) {
+			c.moveUp(path);
 			return 1;
 		}
 		printEvent(Event(name, events.at(name)));
+		c.moveUp(path);
 		return 0;
 	}
 

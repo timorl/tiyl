@@ -12,6 +12,8 @@ namespace cli {
 
  using Date = util::Date;
 
+	bool moveDownWithArgs(Context & c, Arguments & args, ProjectPath & path);
+
 	int singleCommand(Commands const & commands, Context & c, std::string const & name, Arguments const & args);
 
 	std::string splitSubcommand(Arguments const & oldArgs, Arguments & newArgs, std::string const & defaultCommand);

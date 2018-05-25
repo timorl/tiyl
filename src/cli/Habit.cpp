@@ -41,17 +41,24 @@ namespace cli {
 	}
 
 	int habitDone(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Habits const & habits = c.getProject().getHabits();
 		if (habits.empty()) {
 			std::cout << "No habits." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(habits), a, "habit");
 		if (name.empty()) {
+			c.moveUp(path);
 			return 1;
 		}
 		c.doHabit(name);
+		c.moveUp(path);
 		return 0;
 	}
 
@@ -72,17 +79,24 @@ namespace cli {
 	}
 
 	int habitDel(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Habits const & habits = c.getProject().getHabits();
 		if (habits.empty()) {
 			std::cout << "No habits." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(habits), a, "habit");
 		if (name.empty()) {
+			c.moveUp(path);
 			return 1;
 		}
 		c.delHabit(name);
+		c.moveUp(path);
 		return 0;
 	}
 
@@ -93,17 +107,24 @@ namespace cli {
 	}
 
 	int habitShow(Context & c, Arguments const & args) {
+		ProjectPath path;
+		Arguments a = args;
+		if (!moveDownWithArgs(c, a, path)) {
+			return 3;
+		}
 		Habits const & habits = c.getProject().getHabits();
 		if (habits.empty()) {
 			std::cout << "No habits." << std::endl;
+			c.moveUp(path);
 			return 2;
 		}
-		Arguments a = args;
 		std::string name = chooseFrom(keyVector(habits), a, "habit");
 		if (name.empty()) {
+			c.moveUp(path);
 			return 1;
 		}
 		printHabit(Habit(name, habits.at(name)));
+		c.moveUp(path);
 		return 0;
 	}
 
