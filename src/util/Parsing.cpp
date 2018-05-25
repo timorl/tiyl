@@ -51,15 +51,17 @@ namespace util {
 		return tokenize(input, getSingleToken);
 	}
 
+	const char pathSeparator('/');
+
 	std::string getSinglePathToken(std::string const & input, unsigned long long & start) {
 		std::string result;
-		if (input[start] == '/') {
+		if (input[start] == pathSeparator) {
 			start++;
 			if (start >= input.length()) {
 				return "";
 			}
 		}
-		unsigned long long end = input.find('/', start);
+		unsigned long long end = input.find(pathSeparator, start);
 		if (end == std::string::npos) {
 			end = input.length();
 		}
@@ -71,6 +73,14 @@ namespace util {
 
 	std::vector<std::string> tokenizePath(std::string const & input) {
 		return tokenize(input, getSinglePathToken);
+	}
+
+	std::string gluePath(std::vector<std::string> const & path) {
+		std::string result;
+		for (std::string const & p : path) {
+			result += p + pathSeparator;
+		}
+		return result;
 	}
 
 }
