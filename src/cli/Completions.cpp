@@ -106,6 +106,9 @@ namespace cli {
 			}
 			followingPath.pop_back();
 			args[0] = util::gluePath(followingPath);
+			if (!followingPath.empty() && !followingPath.back().empty() && followingPath.back().back() != '/') {
+				args[0].pop_back();
+			}
 			return prepend(pathCompletions(c, args, path), nextProject + "/");
 		}
 		Completions result;
